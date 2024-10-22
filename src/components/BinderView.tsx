@@ -35,7 +35,9 @@ export const BinderView = ({
 
   const { cols, rows, page } = BinderTypes[initialType];
   const [size, setSize] = useState({ cols, rows, page });
-  const [pageCards, setPageCards] = useState<boolean[]>([]);
+  const [pageCards, setPageCards] = useState<boolean[]>(
+    new Array(page).fill(true)
+  );
   const [totalPages, setTotalPages] = useState<boolean[]>([]);
 
   const refreshBinder = ({ cols, rows, pages }: any) => {
@@ -46,8 +48,8 @@ export const BinderView = ({
   };
 
   useEffect(() => {
-    const partialPage = cardTotal % 9 ? 1 : 0;
-    const pages = Math.floor(cardTotal / 9) + partialPage;
+    const partialPage = cardTotal % size.page ? 1 : 0;
+    const pages = Math.floor(cardTotal / size.page) + partialPage;
     refreshBinder({ cols: 3, rows: 3, pages });
   }, []);
 

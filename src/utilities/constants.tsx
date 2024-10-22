@@ -1,5 +1,5 @@
 type BinderType = {
-  class: string;
+  classes: string;
   cols: number;
   rows: number;
   page: number;
@@ -11,19 +11,19 @@ type BinderTypesMap = {
 
 export const BinderTypes: BinderTypesMap = {
   2: {
-    class: "grid-cols-2 grid-rows-2",
+    classes: "grid-cols-2 grid-rows-2",
     cols: 2,
     rows: 2,
     page: 4,
   },
   3: {
-    class: "grid-cols-3 grid-rows-3",
+    classes: "grid-cols-3 grid-rows-3",
     cols: 3,
     rows: 3,
     page: 9,
   },
   4: {
-    class: "grid-cols-4 grid-rows-3",
+    classes: "grid-cols-4 grid-rows-3",
     cols: 4,
     rows: 3,
     page: 12,

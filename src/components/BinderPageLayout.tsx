@@ -1,4 +1,3 @@
-import { BinderTypes } from "@/utilities/constants";
 import clsx from "clsx";
 
 export default function BinderPageLayout({
@@ -10,11 +9,17 @@ export default function BinderPageLayout({
 }) {
   const icons = new Array(cols * rows).fill(true);
 
+  const BinderTypes = {
+    2: "grid-cols-2 grid-rows-2",
+    3: "grid-cols-3 grid-rows-3",
+    4: "grid-cols-4 grid-rows-3",
+  };
+
   return (
     <div
       className={clsx(
         "grid gap-2 rounded-md bg-slate-400 p-2 w-fit",
-        BinderTypes[cols].class
+        BinderTypes[cols]
       )}
     >
       {icons.map((_, i) => (
