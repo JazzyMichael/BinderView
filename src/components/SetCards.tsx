@@ -506,18 +506,22 @@ export default function SetCards({
                                 onKeyDown={({ key }) => {
                                   if (key === "Enter") {
                                     createBinder();
-                                    document.getElementById(
-                                      "binder-popover-list"
-                                    ).scrollTop = 0;
+                                    if (typeof window !== "undefined") {
+                                      document.getElementById(
+                                        "binder-popover-list"
+                                      ).scrollTop = 0;
+                                    }
                                   }
                                 }}
                               />
                               <button
                                 onClick={() => {
                                   createBinder();
-                                  document.getElementById(
-                                    "binder-popover-list"
-                                  ).scrollTop = 0;
+                                  if (typeof window !== "undefined") {
+                                    document.getElementById(
+                                      "binder-popover-list"
+                                    ).scrollTop = 0;
+                                  }
                                 }}
                                 className="bg-slate-900 rounded-lg text-white"
                               >

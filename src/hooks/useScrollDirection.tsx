@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 
 export default function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState("");
-  const scrollEl: any = document?.getElementById("main-content");
+  const scrollEl: any =
+    typeof window === "undefined"
+      ? ""
+      : document?.getElementById("main-content");
   let lastScrollY: number = scrollEl?.scrollTop ?? 0;
 
   // useEffect(() => {
