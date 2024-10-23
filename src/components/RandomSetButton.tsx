@@ -1,5 +1,6 @@
 "use client";
 
+import { getSlugFromSetId } from "@/utilities/slugs";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -17,7 +18,7 @@ export default function RandomSetButton({ sets }: { sets: any[] }) {
       `series-${sets[randomIdx].series.replaceAll(" ", "-")}`
     );
     if (el) el.scrollIntoView();
-    router.push(`/${sets[randomIdx].id}`);
+    router.push(`/${getSlugFromSetId(sets[randomIdx].id)}`);
   };
 
   return (

@@ -14,27 +14,18 @@ export const dynamic = "force-static"; // statically render all dynamic paths
 export const dynamicParams = true; // ensure dynamic isr is enabled
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { setID } = params;
-
-  const set = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/v2/cards?q=set.id:${setID}&orderBy=number`,
-    { next: { revalidate: 3600 * 24, tags: ["set", `${setID}`] } }
-  ).then((x) => x.json());
-
-  const setName = set?.data[0]?.set?.name || "Set Cards";
+  const { setID: slug } = params;
+  const setID = getSetIdFromSlug(slug);
+  const { cards } = await getCards(setID);
+  const setName = cards[0]?.set?.name || "Set Cards";
 
   return {
     title: `${setName} Card List`,
-    description: `${setName} full set list with price data and filters.`,
+    description: `${setName} full card list with price data and digital binder collections.`,
   };
 }
 
 export default async function SetPage({ params }: Props) {
-  // const { slug } = params
-  // const setID = getIdFromSlug(slug) -> map
-  //
-  // const href = '/' + getSlugFromId(id) -> map
-
   const { setID: slug } = params;
   const setID = getSetIdFromSlug(slug);
   const { cards, subset, rarities } = await getCards(setID);
