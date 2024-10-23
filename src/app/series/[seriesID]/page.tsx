@@ -10,13 +10,11 @@ type Series = {
 };
 
 // export const revalidate = 3600 * 24; // invalidate every 24 hours
-export const revalidate = 300; // 5 min
+export const revalidate = 360000; // 100 hours
 export const dynamic = "force-static"; // statically render all dynamic paths
 export const dynamicParams = true; // ensure dynamic isr is enabled
 
 export default async function SeriesPage({ params }) {
-  console.log("-----SERIES PAGE", params.seriesID);
-
   const { english } = await getSets();
   const seriesData = formatSets(english.data);
 

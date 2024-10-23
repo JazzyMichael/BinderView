@@ -15,7 +15,7 @@ type Series = {
   cards: number;
 };
 
-export const revalidate = 120;
+export const revalidate = 360000;
 
 export default async function SeriesListPage() {
   // const params = await getSeriesList();

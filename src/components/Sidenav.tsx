@@ -27,6 +27,7 @@ import {
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import SeriesItem from "./SeriesItem";
+import { getSlugFromSetId } from "@/utilities/slugs";
 
 function formatDate(date: string) {
   const [year, month] = date.split("/");
@@ -132,10 +133,6 @@ export default function Sidenav({
     setExpanded((x) => !x);
   };
 
-  const toggleCollapseAll = () => {
-    console.log("collapse/expand all");
-  };
-
   const togglePromos = () => {
     setShowPromos((x) => !x);
   };
@@ -147,10 +144,6 @@ export default function Sidenav({
   function handleSeriesItemClick(event: string) {
     if (event === "promos") {
       togglePromos();
-    }
-
-    if (event === "collapse-all") {
-      toggleCollapseAll();
     }
   }
 
@@ -309,7 +302,10 @@ export default function Sidenav({
                       onMouseMove={handleHoverMovement}
                       className="collapsed-item opacity-0 group bg-transparent transition-all hover:bg-slate-700 rounded-lg my-1"
                     >
-                      <Link href={item.id} className="flex gap-2 items-center">
+                      <Link
+                        href={`/${getSlugFromSetId(item.id)}`}
+                        className="flex gap-2 items-center"
+                      >
                         <div className="w-[32px] h-[32px] relative py-6 m-auto transition-scale scale-100 group-hover:scale-110">
                           <Image
                             src={item.images.symbol}
@@ -369,7 +365,10 @@ export default function Sidenav({
                       onMouseMove={handleHoverMovement}
                       className="collapsed-item opacity-0 group bg-transparent transition-all hover:bg-slate-700 rounded-lg my-1"
                     >
-                      <Link href={item.id} className="flex gap-2 items-center">
+                      <Link
+                        href={`/${getSlugFromSetId(item.id)}`}
+                        className="flex gap-2 items-center"
+                      >
                         <div className="w-[32px] h-[32px] relative py-6 m-auto transition-scale scale-100 group-hover:scale-110">
                           <Image
                             src={item.images.symbol}

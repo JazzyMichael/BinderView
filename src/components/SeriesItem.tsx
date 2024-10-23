@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { motion } from "framer-motion";
+import { getSlugFromSetId } from "@/utilities/slugs";
 
 export default function SeriesItem({
   name,
@@ -53,7 +54,7 @@ export default function SeriesItem({
           <li key={set.id}>
             <Link
               prefetch
-              href={`/${set.id}`}
+              href={`/${getSlugFromSetId(set.id)}`}
               className={clsx(
                 "flex w-full py-2 px-4 border-l hover:border-indigo-600 opacity-80 hover:opacity-100",
                 selectedSetID === set.id ? "border-indigo-600" : ""

@@ -3,12 +3,13 @@ import { redirect } from "next/navigation";
 // import { subsetIDs } from "@/utilities/constants";
 import SetCards from "@/components/SetCards";
 import { getCards } from "@/utilities/data";
+import { getSetIdFromSlug } from "@/utilities/slugs";
 
 type Props = {
   params: { setID: string };
 };
 
-export const revalidate = 3600; // invalidate every hour
+export const revalidate = 360000;
 export const dynamic = "force-static"; // statically render all dynamic paths
 export const dynamicParams = true; // ensure dynamic isr is enabled
 
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { setID } = params;
 
   const set = await fetch(
-    `https://api.pokemontcg.io/v2/cards?q=set.id:${setID}&orderBy=number`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/v2/cards?q=set.id:${setID}&orderBy=number`,
     { next: { revalidate: 3600 * 24, tags: ["set", `${setID}`] } }
   ).then((x) => x.json());
 
@@ -29,7 +30,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SetPage({ params }: Props) {
-  const { setID } = params;
+  // const { slug } = params
+  // const setID = getIdFromSlug(slug) -> map
+  //
+  // const href = '/' + getSlugFromId(id) -> map
+
+  const { setID: slug } = params;
+  const setID = getSetIdFromSlug(slug);
   const { cards, subset, rarities } = await getCards(setID);
 
   if (!cards?.length) redirect("/");

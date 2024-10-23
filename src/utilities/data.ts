@@ -7,20 +7,24 @@ import {
   OtherPromos,
 } from "./constants";
 
+const { NEXT_PUBLIC_API_KEY: API_KEY, NEXT_PUBLIC_BASE_URL: BASE_URL } =
+  process.env;
+
 export const searchCards = async (term: string) => {
-  const baseURL = "https://api.pokemontcg.io/v2/cards?q=name:";
-  const { data } = await fetch(`${baseURL}*${term}*`).then((x) => x.json());
+  const { data } = await fetch(`${BASE_URL}/v2/cards?q=name:*${term}*`, {
+    headers: { "X-Api-Key": API_KEY },
+  }).then((x) => x.json());
   return data;
 };
 
 export async function getSets() {
-  const englishSetsUrl =
-    "https://api.pokemontcg.io/v2/sets?orderBy=releaseDate";
+  const englishSetsUrl = `${BASE_URL}/v2/sets?orderBy=releaseDate`;
   // const japaneseSetsUrl = "https://www.jpn-cards.com/set";
 
   const [english, japanese = []] = await Promise.all([
     await fetch(englishSetsUrl, {
       next: { revalidate: 3600 * 24, tags: ["english-sets"] },
+      headers: { "X-Api-Key": API_KEY },
     }).then((res) => res.json()),
     // await fetch(japaneseSetsUrl, {
     //   next: { revalidate: 3600 * 24, tags: ["japanese-sets"] },
@@ -128,18 +132,24 @@ export async function getCards(id: string) {
   let subset: any = null;
 
   const res = await fetch(
-    `https://api.pokemontcg.io/v2/cards?q=set.id:${id}&orderBy=number`,
-    { next: { revalidate: 3600 * 24, tags: ["set", `${id}`] } }
+    `${BASE_URL}/v2/cards?q=set.id:${id}&orderBy=number`,
+    {
+      next: { revalidate: 3600 * 24, tags: ["set", `${id}`] },
+      headers: { "X-Api-Key": API_KEY },
+    }
   ).then((x) => x.json());
 
   cards = [...res.data];
 
   if (res.totalCount > res.count && res.page == 1) {
-    console.log(`pagination for set: ${id}`);
+    console.log(`Page 2 for Set: ${id}, ${res.totalCount} total cards`);
 
     const pageTwo = await fetch(
-      `https://api.pokemontcg.io/v2/cards?q=set.id:${id}&orderBy=number&page=2`,
-      { next: { revalidate: 3600 * 24, tags: ["set", `${id}`] } }
+      `${BASE_URL}/v2/cards?q=set.id:${id}&orderBy=number&page=2`,
+      {
+        next: { revalidate: 3600 * 24, tags: ["set", `${id}`] },
+        headers: { "X-Api-Key": API_KEY },
+      }
     ).then((x) => x.json());
 
     cards = [...res.data, ...pageTwo.data];
@@ -148,8 +158,11 @@ export async function getCards(id: string) {
   for (const subsetID of Object.keys(subsetIDs)) {
     if (subsetIDs[subsetID].mainSetID == id) {
       const { data } = await fetch(
-        `https://api.pokemontcg.io/v2/cards?q=set.id:${subsetID}&orderBy=number`,
-        { next: { revalidate: 3600 * 24, tags: ["set", `${id}`] } }
+        `${BASE_URL}/v2/cards?q=set.id:${subsetID}&orderBy=number`,
+        {
+          next: { revalidate: 3600 * 24, tags: ["set", `${id}`] },
+          headers: { "X-Api-Key": API_KEY },
+        }
       ).then((x) => x.json());
 
       subset = {
