@@ -5,10 +5,9 @@ import {
   McDonaldsPromos,
   ExTrainerKitPromos,
   OtherPromos,
+  BASE_URL,
+  API_KEY,
 } from "./constants";
-
-const { NEXT_PUBLIC_API_KEY: API_KEY, NEXT_PUBLIC_BASE_URL: BASE_URL } =
-  process.env;
 
 export const searchCards = async (term: string) => {
   const { data } = await fetch(`${BASE_URL}/v2/cards?q=name:*${term}*`, {
