@@ -22,6 +22,14 @@ export default async function Home() {
         <ol className="list-inside list-decimal text-sm text-center sm:text-left">
           <li className="mb-2">Get started by choosing a set.</li>
           <li>Enjoy a new way of experiencing Pokemon cards.</li>
+          <li>
+            Add cards to binders to organize your favorites and track completion
+            progress.
+          </li>
+          <li>
+            With the Full Series View you can see analyze every card in a series
+            at once.
+          </li>
         </ol>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
@@ -46,7 +54,7 @@ export default async function Home() {
             width={16}
             height={16}
           />
-          Premium Access & Sponsorships
+          Premium Access & Sponsorships →
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
@@ -61,7 +69,7 @@ export default async function Home() {
             width={16}
             height={16}
           />
-          Contact, Terms, & Privacy →
+          Terms & Privacy →
         </a>
       </footer>
       {/* <p>
