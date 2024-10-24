@@ -61,7 +61,7 @@ const cardReducer = (state: any, action: any) => {
   }
 
   if (action.type === "sort") {
-    state.sortId = action.value ?? "number-low-high";
+    state.sortId = action.value ?? "price-high-low";
     localStorage.setItem("sortId", state.sortId);
   }
 
@@ -169,6 +169,8 @@ const formatDate = (date: string) => {
 export default function SetCards({
   cards,
   rarities,
+  initialRaritySelection = [],
+  seriesView,
   set,
   sets = [],
   subset,
@@ -193,7 +195,7 @@ export default function SetCards({
       size: localStorage.getItem("size"),
     };
 
-    const sortId = storage.sortId ?? "number-low-high";
+    const sortId = storage.sortId ?? "price-high-low";
     const label = storage.label ?? {
       number: false,
       name: false,
@@ -203,18 +205,27 @@ export default function SetCards({
     const includeSubset = "true";
     const size = storage.size ?? "196";
 
+    const value = {
+      sortId: seriesView ? "price-high-low" : sortId,
+      label: seriesView
+        ? {
+            number: false,
+            name: false,
+            price: true,
+            save: false,
+          }
+        : label,
+      includeSubset,
+      size,
+      cards,
+      rarities,
+      set,
+      subset,
+    };
+
     cardDispatch({
       type: "initialize",
-      value: {
-        sortId,
-        label,
-        includeSubset,
-        size,
-        cards,
-        rarities,
-        set,
-        subset,
-      },
+      value,
     });
   }, []);
 
@@ -314,6 +325,7 @@ export default function SetCards({
               <ComboSelect
                 label="Filter"
                 options={cardState?.filterOptions}
+                initialSelection={initialRaritySelection}
                 onChange={(selection: any[]) => {
                   cardDispatch({ type: "filter", value: selection });
                 }}
@@ -351,6 +363,7 @@ export default function SetCards({
                   <ComboSelect
                     label="Filter"
                     options={cardState?.filterOptions}
+                    initialSelection={initialRaritySelection}
                     onChange={(selection: any[]) => {
                       cardDispatch({ type: "filter", value: selection });
                     }}

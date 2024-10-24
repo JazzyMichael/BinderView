@@ -73,11 +73,18 @@ export default async function SeriesPage({ params }: Props) {
 
   const combinedRarities = getRarities(combinedCards);
 
+  const clone = { ...combinedRarities };
+  delete clone.Common;
+  delete clone.Uncommon;
+  const initialRaritySelection = Object.keys(clone);
+
   return (
     <SetCards
       cards={combinedCards}
       sets={combinedSets}
       rarities={combinedRarities}
+      initialRaritySelection={initialRaritySelection}
+      seriesView={true}
     />
   );
 }
