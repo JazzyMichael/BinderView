@@ -17,7 +17,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "BinderView",
-  description: "Best way to view cards Old & New",
+  description: "Vintage to Modern, and Everything in-between.",
 };
 
 export default async function RootLayout({

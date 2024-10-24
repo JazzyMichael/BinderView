@@ -22,7 +22,7 @@ import SortSelect from "./SortSelect";
 import FlyoutMenu from "./FlyoutMenu";
 import { BinderView } from "./BinderView";
 import { motion } from "framer-motion";
-import { combineRarities } from "@/utilities/data";
+import { combineRarities, getPrice } from "@/utilities/data";
 
 const labelOptions = [
   { label: "Name", value: "Name" },
@@ -35,38 +35,6 @@ const formatPrice = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 }).format;
-
-const getPrice = (card: any, useFirstEdition = false) => {
-  if (
-    useFirstEdition &&
-    card.tcgplayer?.prices &&
-    card.tcgplayer?.prices["1stEditionHolofoil"]
-  ) {
-    return card.tcgplayer.prices["1stEditionHolofoil"].market;
-  }
-
-  if (card.tcgplayer?.prices?.unlimitedHolofoil) {
-    return card.tcgplayer.prices.unlimitedHolofoil.market;
-  }
-
-  if (card.tcgplayer?.prices?.unlimited) {
-    return card.tcgplayer.prices.unlimited.market;
-  }
-
-  if (card.tcgplayer?.prices?.holofoil) {
-    return card.tcgplayer.prices.holofoil.market;
-  }
-
-  if (card.tcgplayer?.prices?.normal) {
-    return card.tcgplayer?.prices?.normal.market;
-  }
-
-  if (card.tcgplayer?.prices?.reverseHolofoil) {
-    return card.tcgplayer.prices.reverseHolofoil.market;
-  }
-
-  return 0;
-};
 
 const cardReducer = (state: any, action: any) => {
   // console.log({ state, action });
@@ -438,12 +406,16 @@ export default function SetCards({
               className={clsx(
                 "glass p-1 rounded-md flex flex-col justify-between items-center relative",
                 selectedCard === card.id
-                  ? "transition-width duration-500"
-                  : "transition-width duration-200"
+                  ? "w-[95%] lg:w-[60%] transition-width duration-500"
+                  : "h-fit transition-width duration-200"
               )}
-              style={{
-                width: selectedCard === card.id ? "95%" : `${cardState.size}px`,
-              }}
+              style={
+                selectedCard !== card.id
+                  ? {
+                      width: `${cardState.size}px`,
+                    }
+                  : {}
+              }
             >
               {selectedCard === card.id && (
                 <div
@@ -557,7 +529,7 @@ export default function SetCards({
                   src={card.images.small}
                   alt={card.name + " Card"}
                   draggable="false"
-                  className="object-contain w-full rounded-md max-h-[500px]"
+                  className="object-contain w-full rounded-md max-h-[400px]"
                   onClick={() => {
                     if (selectedCard !== card.id) {
                       setSelectedCard(card.id);

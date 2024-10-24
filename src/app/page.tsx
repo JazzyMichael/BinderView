@@ -11,16 +11,21 @@ export default async function Home() {
   return (
     <div className="font-[family-name:var(--font-geist-sans)] grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
+        <div className="flex items-center">
+          <Image
+            src={"/nnneon.svg"}
+            alt="BinderView Logo"
+            width={64}
+            height={48}
+          />
+
+          <h1 className="text-3xl ml-2">
+            Binder <span className="font-bold"> View</span>
+          </h1>
+        </div>
+
         <ol className="list-inside list-decimal text-sm text-center sm:text-left">
-          <li className="mb-2">Get started by choosing a set.</li>
+          <li>Get started by choosing a set.</li>
           <li>Enjoy a new way of experiencing Pokemon cards.</li>
           <li>
             Add cards to binders to organize your favorites and track completion
@@ -39,6 +44,12 @@ export default async function Home() {
             href={`/${latestSet.id}`}
           >
             Latest Set
+          </Link>
+          <Link
+            className="md:hidden rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
+            href={`/sets`}
+          >
+            All Sets
           </Link>
         </div>
       </main>

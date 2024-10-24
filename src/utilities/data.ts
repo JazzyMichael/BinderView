@@ -10,9 +10,15 @@ import {
 } from "./constants";
 
 export const searchCards = async (term: string) => {
-  const { data } = await fetch(`${BASE_URL}/v2/cards?q=name:*${term}*`, {
+  const url =
+    term.split(" ").length === 1
+      ? `${BASE_URL}/v2/cards?q=name:*${term}*`
+      : `${BASE_URL}/v2/cards?q=name:"${term}"`;
+
+  const { data } = await fetch(url, {
     headers: { "X-Api-Key": API_KEY },
   }).then((x) => x.json());
+
   return data;
 };
 
@@ -177,3 +183,35 @@ export async function getCards(id: string) {
 
   return { cards, subset, rarities: getRarities(cards) };
 }
+
+export const getPrice = (card: any, useFirstEdition = false) => {
+  if (
+    useFirstEdition &&
+    card.tcgplayer?.prices &&
+    card.tcgplayer?.prices["1stEditionHolofoil"]
+  ) {
+    return card.tcgplayer.prices["1stEditionHolofoil"].market;
+  }
+
+  if (card.tcgplayer?.prices?.unlimitedHolofoil) {
+    return card.tcgplayer.prices.unlimitedHolofoil.market;
+  }
+
+  if (card.tcgplayer?.prices?.unlimited) {
+    return card.tcgplayer.prices.unlimited.market;
+  }
+
+  if (card.tcgplayer?.prices?.holofoil) {
+    return card.tcgplayer.prices.holofoil.market;
+  }
+
+  if (card.tcgplayer?.prices?.normal) {
+    return card.tcgplayer?.prices?.normal.market;
+  }
+
+  if (card.tcgplayer?.prices?.reverseHolofoil) {
+    return card.tcgplayer.prices.reverseHolofoil.market;
+  }
+
+  return 0;
+};

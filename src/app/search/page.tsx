@@ -47,11 +47,11 @@ export default function Search() {
         </button>
       </form>
 
-      {results?.length && (
+      {results?.length ? (
         <div className="mt-4 mb-10 text-gray-700 italic">
           {results.length} results for &quot;{term}&quot;
         </div>
-      )}
+      ) : undefined}
 
       <div className="block m-2">
         {results.map((card: any) => (
@@ -65,8 +65,8 @@ export default function Search() {
             <Image
               src={card.images.small}
               alt={card.name}
-              width={240}
-              height={330}
+              width={220}
+              height={300}
             />
           </div>
         ))}

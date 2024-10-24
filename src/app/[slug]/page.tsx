@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const setName = cards[0]?.set?.name || "Full Set";
 
   return {
-    title: `${setName} Card List - BinderView`,
+    title: `${setName} Card List - BinderView Pokemon Cards`,
     description: `BinderView is the best way to experience everything ${setName} has to offer.`,
   };
 }
