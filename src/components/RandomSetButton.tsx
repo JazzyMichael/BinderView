@@ -29,6 +29,7 @@ export default function RandomSetButton({ sets }: { sets: any[] }) {
       onClick={viewRandomSet}
     >
       <Image
+        // src={"/nnneon.svg"}
         src="https://nextjs.org/icons/vercel.svg"
         alt="Vercel logomark"
         width={20}

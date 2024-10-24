@@ -22,7 +22,7 @@ import SortSelect from "./SortSelect";
 import FlyoutMenu from "./FlyoutMenu";
 import { BinderView } from "./BinderView";
 import { motion } from "framer-motion";
-import { combineRarities, getPrice } from "@/utilities/data";
+import { combineRarities, formatPrice, getPrice } from "@/utilities/data";
 
 const labelOptions = [
   { label: "Name", value: "Name" },
@@ -30,11 +30,6 @@ const labelOptions = [
   { label: "Number", value: "Number" },
   { label: "Save", value: "Save" },
 ];
-
-const formatPrice = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-}).format;
 
 const cardReducer = (state: any, action: any) => {
   // console.log({ state, action });

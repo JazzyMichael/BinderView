@@ -1,4 +1,4 @@
-export interface Card {
+export type Card = {
   id: string;
   name: string;
   // supertype: Pokémon, Energy, Trainer, etc
@@ -18,9 +18,9 @@ export interface Card {
   images: CardImage;
   tcgplayer?: any; // ITCGPlayer;
   cardmarket?: any; // ICardmarket;
-}
+};
 
-export interface Set {
+export type Set = {
   id: string;
   images: SetImage;
   legalities: any;
@@ -31,14 +31,14 @@ export interface Set {
   series: string;
   total: number;
   updatedAt: string;
-}
+};
 
-export interface SetImage {
+export type SetImage = {
   symbol: string;
   logo: string;
-}
+};
 
-export interface CardImage {
+export type CardImage = {
   small: string;
   large: string;
-}
+};

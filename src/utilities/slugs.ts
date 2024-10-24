@@ -236,8 +236,8 @@ export const setIdToSlug = {
   sv1: "scarlet-violet",
 };
 
-export const getSlugFromSetId = (id: string) => setIdToSlug[id];
-export const getSetIdFromSlug = (slug: string) => setSlugToId[slug];
+export const getSlugFromSetId = (id: string) => setIdToSlug[id] ?? id;
+export const getSetIdFromSlug = (slug: string) => setSlugToId[slug] ?? slug;
 
 // const obj = {};
 

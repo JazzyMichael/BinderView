@@ -1,5 +1,11 @@
 import SetCards from "@/components/SetCards";
-import { getSets, formatSets, getRarities, getCards } from "@/utilities/data";
+import {
+  getSets,
+  formatSets,
+  getRarities,
+  getCards,
+  seriesNameToSlug,
+} from "@/utilities/data";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -32,14 +38,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${pretty} Pokemon Cards`,
     description:
-      "Thats right, THE ENTIRE SERIES/ERA/GENERATION AT ONCE on the BinderView Platform",
+      "THE ENTIRE SERIES/ERA/GENERATION AT ONCE on the BinderView Platform",
     openGraph: {
       images: ["/scarlet-violet-screenshot.jpg"],
     },
   };
 }
 
-export default async function SeriesPage({ params }) {
+export default async function SeriesPage({ params }: Props) {
   const { english } = await getSets();
   const seriesData = formatSets(english.data);
 
@@ -48,7 +54,7 @@ export default async function SeriesPage({ params }) {
 
   const seriesList: Series[] = Object.entries(seriesData).map(
     ([series, sets]: [string, any[]]): Series => ({
-      id: series.replaceAll(" ", "").replaceAll("&", "-").toLowerCase(),
+      id: seriesNameToSlug(series),
       name: series,
       sets,
       cards: sets.reduce((prev, cur) => cur.total + prev, 0),

@@ -215,3 +215,16 @@ export const getPrice = (card: any, useFirstEdition = false) => {
 
   return 0;
 };
+
+export const formatPrice = (price: number) => {
+  if (!price) return "n/a";
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(price);
+};
+
+export const seriesNameToSlug = (seriesName: string): string => {
+  return seriesName.replaceAll(" ", "").replaceAll("&", "-").toLowerCase();
+};

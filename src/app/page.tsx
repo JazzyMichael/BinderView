@@ -9,8 +9,8 @@ export default async function Home() {
   const latestSet = sets[sets.length - 1];
 
   return (
-    <div className="font-[family-name:var(--font-geist-sans)] grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <div className="font-[family-name:var(--font-geist-sans)] grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-2 gap-8">
+      <div className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="flex items-center">
           <Image
             src={"/nnneon.svg"}
@@ -52,41 +52,22 @@ export default async function Home() {
             All Sets
           </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="#"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Premium Access & Sponsorships →
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="#"
-          // target="_blank"
-          // rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Terms & Privacy →
-        </a>
+      </div>
+
+      <footer className="row-start-3 flex flex-col items-center mb-4">
+        <p className="text-sm">
+          Copyright &copy; Binderview.com {new Date().getFullYear()} All Rights
+          Reserved.
+        </p>
+        <p className="text-xs">
+          <Link href="/terms" className="hover:underline mr-1">
+            Terms
+          </Link>
+          <Link href="/privacy" className="hover:underline ml-1">
+            Privacy
+          </Link>
+        </p>
       </footer>
-      {/* <p>
-        Copyright &copy; BinderView {new Date().getFullYear()} All Rights
-        Reserved
-      </p> */}
     </div>
   );
 }

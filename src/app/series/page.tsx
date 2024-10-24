@@ -5,7 +5,7 @@
       - exit at top, fade out and translateY up out of the frame
 */
 
-import { formatSets, getSets } from "@/utilities/data";
+import { formatSets, getSets, seriesNameToSlug } from "@/utilities/data";
 import Link from "next/link";
 
 type Series = {
@@ -21,7 +21,7 @@ export async function generateMetadata() {
   return {
     title: `Pokemon Cards in the entire SERIES/ERA/GENERATION`,
     description:
-      "Thats right, expreience the ENTIRE SERIES/ERA/GENERATION AT ONCE on the BinderView Platform",
+      "Expreience everything all at once on the BinderView Platform.",
     openGraph: {
       images: ["/scarlet-violet-screenshot.jpg"],
     },
@@ -39,7 +39,7 @@ export default async function SeriesListPage() {
     Object.entries(seriesData)
       .map(
         ([series, sets]: [string, any[]]): Series => ({
-          id: series.replaceAll(" ", "").replaceAll("&", "-").toLowerCase(),
+          id: seriesNameToSlug(series),
           name: series,
           sets: sets.length,
           cards: sets.reduce((prev, cur) => cur.total + prev, 0),
