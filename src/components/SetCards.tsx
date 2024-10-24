@@ -553,11 +553,13 @@ export default function SetCards({
                 >
                   <p className="my-2">{card.rarity}</p>
                   <Link
-                    href={card.tcgplayer?.url}
-                    target="_blank"
+                    href={card.tcgplayer?.url ?? "#"}
+                    target={card.tcgplayer?.url ? "_blank" : "_self"}
                     className="flex items-center justify-center gap-2 px-1 hover:text-slate-600 border-b-2 border-transparent hover:border-slate-600"
                   >
-                    <p>TCG Player</p>
+                    <p>
+                      TCG Player{card.tcgplayer?.url ? "" : " Not Available"}
+                    </p>
                     <ArrowTopRightOnSquareIcon className="h-4 w-4" />
                   </Link>
                 </div>
