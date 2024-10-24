@@ -40,16 +40,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  const setPages: MetadataRoute.Sitemap = Object.keys(seriesData).map(
-    (series: string) => {
+  const setPages: MetadataRoute.Sitemap = Object.keys(seriesData)
+    .map((series: string) => {
       return seriesData[series].map((set: Set) => ({
         url: `${baseUrl}/${getSlugFromSetId(set.id)}`,
         priority: highPriority[getSlugFromSetId(set.id)] ? 0.9 : 0.7,
         changeFrequency: "weekly",
         // lastModified: getLastModified(set.updatedAt)
       }));
-    }
-  );
+    })
+    .flat();
 
   return [...staticPages, ...seriesPages, ...setPages];
 }
