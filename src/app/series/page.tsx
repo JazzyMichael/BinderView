@@ -17,6 +17,17 @@ type Series = {
 
 export const revalidate = 360000;
 
+export async function generateMetadata() {
+  return {
+    title: `Pokemon Cards in the entire SERIES/ERA/GENERATION`,
+    description:
+      "Thats right, expreience the ENTIRE SERIES/ERA/GENERATION AT ONCE on the BinderView Platform",
+    openGraph: {
+      images: ["/scarlet-violet-screenshot.jpg"],
+    },
+  };
+}
+
 export default async function SeriesListPage() {
   const { english } = await getSets();
   const seriesData = formatSets(english.data);

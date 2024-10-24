@@ -38,8 +38,6 @@ export default async function Image({ params }: { params: { slug: string } }) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-between",
-          boxShadow: "inset 0px 2px 35px 12px rgba(199,199,199)",
           position: "relative",
         }}
       >
@@ -70,13 +68,12 @@ export default async function Image({ params }: { params: { slug: string } }) {
           height={300}
           width={800}
           style={{
-            background:
-              "linear-gradient(0deg, rgb(239,249,255), transparent 100%)",
-            boxShadow: "10px 100px 96px 64px rgb(0,0,0)",
+            background: "linear-gradient(0deg, white, white, transparent 100%)",
+            boxShadow: "10px 96px 120px 20px rgb(40,40,40)",
             borderRadius: "8px",
             padding: "12px",
             position: "absolute",
-            bottom: "1px",
+            bottom: "10%",
           }}
         />
       </div>
