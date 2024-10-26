@@ -20,8 +20,8 @@ export default async function Image({ params }: { params: { slug: string } }) {
       const aPrice = getPrice(a);
       const bPrice = getPrice(b);
 
-      if (aPrice === 0) return -1;
-      if (bPrice === 0) return 1;
+      // if (aPrice === 0) return -1;
+      // if (bPrice === 0) return 1;
 
       return aPrice < bPrice ? 1 : -1;
     })

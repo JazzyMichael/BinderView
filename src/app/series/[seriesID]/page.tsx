@@ -22,8 +22,12 @@ type Props = {
 
 // export const revalidate = 3600 * 24; // invalidate every 24 hours
 export const revalidate = 360000; // 100 hours
-export const dynamic = "force-static"; // statically render all dynamic paths
+// export const dynamic = "force-static"; // statically render all dynamic paths
 export const dynamicParams = true; // ensure dynamic isr is enabled
+
+export function getStaticParams() {
+  return [];
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { seriesID } = params;

@@ -86,12 +86,18 @@ export default function Sidenav({
   promos,
   oldestSort,
   newestSort,
+  raw,
 }: {
   fulldata: any;
   promos: any[];
   oldestSort: any[];
   newestSort: any[];
+  raw?: any;
 }) {
+  if (raw) {
+    console.log({ raw });
+  }
+
   const selectedSetID =
     usePathname()
       ?.split("/")
