@@ -13,7 +13,7 @@ export const revalidate = 360000;
 // export const dynamic = "force-static"; // statically render all dynamic paths
 export const dynamicParams = true; // ensure dynamic isr is enabled
 
-export function getStaticParams() {
+export function generateStaticParams() {
   return [];
 }
 
