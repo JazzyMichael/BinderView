@@ -3,9 +3,6 @@ export function generateMetadata() {
     title: "Privacy Policy",
     description:
       "Binderview.com does not store any user data. No cookies are used and user authentication is not supported.",
-    openGraph: {
-      images: ["/scarlet-violet-screenshot.jpg"],
-    },
   };
 }
 

@@ -3,9 +3,6 @@ export function generateMetadata() {
     title: "Terms of Service",
     description:
       "Binderview.com is not responsible for any wrist exhaustion from viewing lots of cards.",
-    openGraph: {
-      images: ["/scarlet-violet-screenshot.jpg"],
-    },
   };
 }
 

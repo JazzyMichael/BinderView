@@ -1,5 +1,14 @@
 import Link from "next/link";
 import { getSets, formatSets } from "@/utilities/data";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Cards List of Every Set on Binder View",
+    description:
+      "Choose a Set or an entire Series of Cards to view the full card list",
+  };
+}
 
 export default async function Sets() {
   const { english } = await getSets();

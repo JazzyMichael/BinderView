@@ -10,6 +10,16 @@ import {
 } from "@heroicons/react/24/solid";
 import useSearchCards from "@/hooks/useSearchCards";
 
+// TODO: Make this shit a server a component
+
+// export async function generateMetadata(): Promise<Metadata> {
+//   return {
+//     title: "Search All Pokemon Cards on Binder View",
+//     description:
+//       "What are you lookin for? Type it in here to find the cards you want, and play around with the sets menu to look at all the related cards.",
+//   };
+// }
+
 export default function Search() {
   const { term, setTerm, results } = useSearchCards();
 

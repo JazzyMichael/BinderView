@@ -1,7 +1,16 @@
 import RandomSetButton from "@/components/RandomSetButton";
 import { getSets } from "@/utilities/data";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Binder View Pokemon Cards",
+    description:
+      "From Vintage to Modern, and everything in-between, BinderView provides the best digital binder experience for viewing pokemon cards.",
+  };
+}
 
 export default async function Home() {
   const { english } = await getSets();

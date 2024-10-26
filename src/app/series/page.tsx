@@ -23,7 +23,7 @@ export async function generateMetadata() {
     description:
       "Expreience everything all at once on the BinderView Platform.",
     openGraph: {
-      images: ["/scarlet-violet-screenshot.jpg"],
+      images: ["/screenshots/scarlet-violet.jpg"],
     },
   };
 }

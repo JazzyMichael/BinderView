@@ -1,8 +1,16 @@
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 
 const DynamicComponent = dynamic(() => import("@/components/Binders"), {
   ssr: false,
 });
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Binder View - Saved lists of cards",
+    // description: "",
+  };
+}
 
 export default function Collection() {
   return (

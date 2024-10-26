@@ -35,12 +35,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     )
     .join(" ");
 
+  const images = [];
+
+  if (seriesID === "scarlet-violet") {
+    images.push("/screenshots/scarlet-violet.jpg");
+  }
+
+  if (seriesID === "sword-shield") {
+    images.push("/screenshots/sword-shield.jpg");
+  }
+
   return {
     title: `${pretty} Pokemon Cards`,
     description:
       "THE ENTIRE SERIES/ERA/GENERATION AT ONCE on the BinderView Platform",
     openGraph: {
-      images: ["/scarlet-violet-screenshot.jpg"],
+      images,
     },
   };
 }
