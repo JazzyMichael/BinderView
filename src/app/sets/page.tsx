@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSets, formatSets } from "@/utilities/data";
 import { Metadata } from "next";
+import { getSlugFromSetId } from "@/utilities/slugs";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -34,7 +35,7 @@ export default async function Sets() {
                 {sets.map((set: any) => (
                   <li key={set.id} className="px-6 hover:bg-slate-600">
                     {!omitted[set.id] && (
-                      <Link href={`/${set.id}`}>
+                      <Link href={`/${getSlugFromSetId(set.id)}`}>
                         <img
                           src={set.images.logo}
                           className="mx-auto py-10 h-40"

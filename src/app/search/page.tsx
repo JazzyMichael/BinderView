@@ -12,21 +12,22 @@ import useSearchCards from "@/hooks/useSearchCards";
 
 // TODO: Make this shit a server a component
 
+// import { Metadata } from "next";
+
 // export async function generateMetadata(): Promise<Metadata> {
 //   return {
 //     title: "Search All Pokemon Cards on Binder View",
 //     description:
-//       "What are you lookin for? Type it in here to find the cards you want, and play around with the sets menu to look at all the related cards.",
+//       "What are you lookin for? Type it in here to find the cards you want, and play around with the sets menu to look at all the cards you can imagine.",
 //   };
 // }
 
-export default function Search() {
-  const { term, setTerm, results } = useSearchCards();
+export default function SearchPage() {
+  const { term, search, results } = useSearchCards();
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    // @ts-ignore
-    setTerm(e?.target[0]?.value.trim() ?? "");
+    search(e?.target[0]?.value ?? "", 10);
   };
 
   return (
@@ -57,7 +58,7 @@ export default function Search() {
         </button>
       </form>
 
-      {results?.length ? (
+      {results?.length && term ? (
         <div className="mt-4 mb-10 text-gray-700 italic">
           {results.length} results for &quot;{term}&quot;
         </div>

@@ -1,7 +1,12 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getCardsBySlug } from "@/utilities/data";
-import SetCards from "@/components/SetCards";
+// import SetCards from "@/components/SetCards";
+import lazy from "next/dynamic";
+
+const SetCards = lazy(() => import("@/components/SetCards"), {
+  ssr: false,
+});
 
 type Props = {
   params: { slug: string };

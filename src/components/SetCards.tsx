@@ -534,10 +534,14 @@ export default function SetCards({
 
               {card?.images?.small && (
                 <img
-                  src={card.images.small}
+                  src={
+                    selectedCard === card.id
+                      ? card.images.large
+                      : card.images.small
+                  }
                   alt={card.name + " Card"}
                   draggable="false"
-                  className="object-contain w-full rounded-md max-h-[400px]"
+                  className="object-contain w-full rounded-md max-h-[512px]"
                   onClick={() => {
                     if (selectedCard !== card.id) {
                       setSelectedCard(card.id);

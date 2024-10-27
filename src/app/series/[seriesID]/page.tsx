@@ -1,4 +1,3 @@
-import SetCards from "@/components/SetCards";
 import {
   getSets,
   formatSets,
@@ -8,6 +7,12 @@ import {
 } from "@/utilities/data";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
+// import SetCards from "@/components/SetCards";
+import lazy from "next/dynamic";
+
+const SetCards = lazy(() => import("@/components/SetCards"), {
+  ssr: false,
+});
 
 type Series = {
   id: string;
@@ -20,9 +25,8 @@ type Props = {
   params: { seriesID: string };
 };
 
-// export const revalidate = 3600 * 24; // invalidate every 24 hours
 export const revalidate = 172800; // 2 days
-// export const dynamic = "force-static"; // statically render all dynamic paths
+export const dynamic = "force-static"; // statically render all dynamic paths
 export const dynamicParams = true; // ensure dynamic isr is enabled
 
 export function generateStaticParams() {
@@ -88,8 +92,11 @@ export default async function SeriesPage({ params }: Props) {
   const combinedRarities = getRarities(combinedCards);
 
   const clone = { ...combinedRarities };
+
   delete clone.Common;
   delete clone.Uncommon;
+  delete clone.Rare;
+
   const initialRaritySelection = Object.keys(clone);
 
   return (

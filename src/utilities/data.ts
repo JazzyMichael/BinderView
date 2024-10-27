@@ -20,7 +20,7 @@ export const searchCards = async (term: string) => {
     headers: { "X-Api-Key": API_KEY },
   }).then((x) => x.json());
 
-  return data;
+  return data ?? [];
 };
 
 export async function getSets() {

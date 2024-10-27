@@ -1,10 +1,3 @@
-/*
-  - Animation
-    - "series", "era", "generation" text change animation, repeat every 3 seconds
-      - enter from bottom, fade in and translateY up into the frame
-      - exit at top, fade out and translateY up out of the frame
-*/
-
 import { formatSets, getSets, seriesNameToSlug } from "@/utilities/data";
 import Link from "next/link";
 
@@ -55,6 +48,7 @@ export default async function SeriesListPage() {
         {seriesList.map((series) => (
           <li key={`seriesList-${series.id}`}>
             <Link
+              prefetch={false}
               href={`/series/${series.id}`}
               className="p-3 block hover:bg-gray-200"
             >

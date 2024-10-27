@@ -18,11 +18,17 @@ export default function useBinders() {
   };
 
   const addCard = (binder: string, card: any) => {
-    setBinders({ ...binders, [binder]: [card, ...binders[binder]] });
+    binders[binder].unshift(card);
+    setBinders({ ...binders });
   };
 
   const removeCard = (binder: string, index: number) => {
     binders[binder].splice(index, 1);
+    setBinders({ ...binders });
+  };
+
+  const reorderCards = (binder: string, cards: any[]) => {
+    binders[binder] = cards;
     setBinders({ ...binders });
   };
 
@@ -34,5 +40,6 @@ export default function useBinders() {
     deleteBinder,
     addCard,
     removeCard,
+    reorderCards,
   };
 }

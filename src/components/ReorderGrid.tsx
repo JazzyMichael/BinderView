@@ -5,7 +5,6 @@ import {
   CSSProperties,
   forwardRef,
   HTMLAttributes,
-  useEffect,
 } from "react";
 import {
   DndContext,
@@ -36,8 +35,10 @@ const Grid = ({ children }) => {
         gridTemplateColumns: `repeat(auto-fit, 100px)`,
         gridGap: 10,
         justifyContent: "center",
-        maxWidth: "800px",
-        margin: "60px auto",
+        width: "100%",
+        maxWidth: "1200px",
+        margin: "48px auto",
+        padding: "12px",
       }}
     >
       {children}
@@ -57,11 +58,10 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
     const inlineStyles: CSSProperties = {
       opacity: withOpacity ? "0.5" : "1",
       transformOrigin: "50% 50%",
-      height: "140px",
-      width: "100px",
+      // height: "140px",
+      // width: "100px",
       borderRadius: "10px",
       cursor: isDragging ? "grabbing" : "grab",
-      backgroundColor: "#ffffff",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -90,8 +90,8 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
         <Image
           src={card.images.small}
           alt={`${card.name} Card Image`}
-          height={120}
-          width={80}
+          height={200}
+          width={120}
         />
       </div>
     );
@@ -133,17 +133,14 @@ export default function ReorderGrid({
   onRemove,
 }: {
   cards: any[];
-  onReorder: any;
-  onRemove: any;
+  onReorder?: any;
+  onRemove?: any;
 }) {
-  const [items, setItems] = useState(cards);
   const [activeCard, setActiveCard] = useState<any>(null);
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
-  useEffect(() => setItems(cards), [cards]);
-
   const handleDragStart = useCallback((event: DragStartEvent) => {
-    setActiveCard(items.find((i) => `${i.id}` == `${event.active.id}`));
+    setActiveCard(cards.find((i) => `${i.id}` == `${event.active.id}`));
   }, []);
 
   const handleDragCancel = useCallback(() => {
@@ -154,13 +151,11 @@ export default function ReorderGrid({
     const { active, over } = event;
 
     if (active.id != over?.id) {
-      setItems((items) => {
-        const oldIndex = items.findIndex((card) => card.id == `${active.id}`);
-        const newIndex = items.findIndex((card) => card.id == `${over!.id}`);
-        const reorderdItems = arrayMove(items, oldIndex, newIndex);
-        onReorder(reorderdItems);
-        return reorderdItems;
-      });
+      const oldIndex = cards.findIndex((card) => card.id == `${active.id}`);
+      const newIndex = cards.findIndex((card) => card.id == `${over!.id}`);
+      const copy = [...cards];
+      const reorderdItems = arrayMove(copy, oldIndex, newIndex);
+      if (onReorder) onReorder(reorderdItems);
     }
 
     setActiveCard(null);
@@ -175,23 +170,23 @@ export default function ReorderGrid({
       onDragCancel={handleDragCancel}
     >
       <SortableContext
-        items={items.map(({ id }) => id)}
+        items={cards.map(({ id }) => id)}
         strategy={rectSortingStrategy}
       >
         <Grid>
-          {items.map((card, i) => (
+          {cards.map((card, i) => (
             <SortableItem
               key={`sortable-${card.id}-${i}`}
               card={card}
-              onRemove={() => onRemove(i)}
+              onRemove={() => onRemove && onRemove(i)}
             />
           ))}
         </Grid>
       </SortableContext>
       <DragOverlay adjustScale style={{ transformOrigin: "0 0 " }}>
-        {activeCard ? (
+        {activeCard && (
           <Item card={activeCard} onRemove={onRemove} isDragging />
-        ) : null}
+        )}
       </DragOverlay>
     </DndContext>
   );

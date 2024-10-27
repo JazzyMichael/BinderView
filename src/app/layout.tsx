@@ -9,6 +9,7 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "../../public/fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -16,7 +17,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "BinderView",
+  title: "Binder View",
   description: "Vintage to Modern, and Everything in-between.",
 };
 

@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import ReorderGrid from "./ReorderGrid";
+import { BinderView } from "./BinderView";
 
 export default function Binders() {
   const {
@@ -19,33 +20,18 @@ export default function Binders() {
     deleteBinder,
     addCard,
     removeCard,
+    reorderCards,
   } = useBinders();
+
+  const { search, results } = useSearchCards();
+
   const [selected, setSelected] = useState("");
-  const { setTerm, results } = useSearchCards();
-  const [timer, setTimer] = useState<any>(null);
-
-  const debounceSearch = (event: any) => {
-    const term =
-      event?.currentTarget?.value?.trim() +
-      (event.key.length === 1 ? event.key : "");
-
-    clearTimeout(timer);
-
-    if (event.key === "Enter") {
-      setTerm(term);
-    } else {
-      const t = setTimeout(() => setTerm(term), 1000);
-      setTimer(t);
-    }
-  };
+  const [view, setView] = useState("Reorder");
 
   return (
-    <div className="mx-auto p-4 font-[family-name:var(--font-geist-sans)]">
-      <div className="w-full max-w-2xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-        <div className="p-4 border-b">
-          <h2 className="text-xl font-semibold text-gray-800">Binders</h2>
-        </div>
-        <div className="p-4 space-y-4">
+    <>
+      <div className="flex flex-col lg:flex-row gap-10 justify-around mx-auto p-4 font-[family-name:var(--font-geist-sans)]">
+        <div className="flex-1 w-full max-w-2xl bg-white shadow-md rounded-lg overflow-hidden p-4 space-y-4">
           <form
             onSubmit={(e: FormEvent) => {
               e.preventDefault();
@@ -73,12 +59,12 @@ export default function Binders() {
             </motion.button>
           </form>
 
-          <motion.ul className="space-y-2">
+          <motion.ul>
             {Object.entries(binders).map(([name, cards]: any) => (
               <motion.li
                 key={name}
                 className={clsx(
-                  "p-2 rounded-md cursor-pointer",
+                  "p-2 my-2 text-center rounded-md cursor-pointer",
                   selected === name
                     ? "bg-slate-700 text-white"
                     : "bg-slate-200 text-slate-800"
@@ -94,28 +80,50 @@ export default function Binders() {
               </motion.li>
             ))}
           </motion.ul>
-        </div>
-      </div>
 
-      {selected && (
-        <>
-          <div className="max-w-2xl m-auto mt-5">
+          {selected && (
+            <div className="flex items-center justify-center">
+              <button
+                onClick={() => {
+                  const temp = selected;
+                  deleteBinder(temp);
+                  setSelected("");
+                }}
+                className="p-1 m-1 rounded-md bg-red-300 hover:bg-red-400"
+              >
+                Delete
+              </button>
+              <p>
+                &quot;{selected}&quot; binder with {binders[selected].length}{" "}
+                cards
+              </p>
+            </div>
+          )}
+        </div>
+
+        {selected && (
+          <div className="flex-1 w-full max-w-2xl">
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={(e) => {
+                // Reduce search delay on "Enter" press
+                e.preventDefault();
+                search(e?.target[0]?.value ?? "", 10);
+              }}
               className="flex space-x-2"
             >
               <input
                 type="text"
-                onKeyDown={debounceSearch}
+                onChange={(e: any) => search(e?.currentTarget?.value ?? "")}
                 placeholder="Add Cards"
-                className="flex-grow text-center p-2 rounded-t-lg border border-0 border-slate-500"
+                className={clsx(
+                  "flex-grow text-center p-2 border border-0 border-slate-500",
+                  results?.length ? "rounded-t-lg" : "rounded-lg"
+                )}
               />
             </form>
-          </div>
 
-          <div className=" max-w-2xl max-h-[360px] overflow-auto m-auto">
-            {results &&
-              results.map((x, i) => (
+            <div className=" max-w-2xl max-h-[360px] overflow-auto m-auto">
+              {results.map((x, i) => (
                 <motion.div
                   key={x.id + "i" + i}
                   whileTap={{ scale: 0.95 }}
@@ -125,8 +133,8 @@ export default function Binders() {
                   <Image
                     src={x.images.small}
                     alt={x.name}
-                    height={80}
-                    width={64}
+                    height={120}
+                    width={72}
                   />
                   <div className="flex flex-col items-start justify-around">
                     <p>{x.name}</p>
@@ -146,27 +154,42 @@ export default function Binders() {
                   </div>
                 </motion.div>
               ))}
+            </div>
           </div>
+        )}
+      </div>
 
-          <ReorderGrid
-            cards={binders[selected]}
-            onReorder={(cards: any[]) => console.log("reorder", cards)}
-            onRemove={(i: number) => removeCard(selected, i)}
-          />
-
+      {selected && (
+        <div className="flex flex-col w-full">
           <button
-            onClick={() => {
-              const temp = selected;
-              deleteBinder(temp);
-              setSelected("");
-            }}
-            className="my-10"
+            className="mx-auto p-2 rounded-md border border-2 border-slate-500 hover:bg-slate-100"
+            onClick={() =>
+              setView((val) => (val === "Reorder" ? "Binder" : "Reorder"))
+            }
           >
-            Delete binder &quot;{selected}&quot; binder with{" "}
-            {binders[selected].length} cards
+            Toggle {view}
           </button>
-        </>
+
+          {view === "Reorder" && (
+            <ReorderGrid
+              cards={binders[selected]}
+              onReorder={(cards: any[]) => reorderCards(selected, cards)}
+              onRemove={(i: number) => removeCard(selected, i)}
+            />
+          )}
+
+          {view === "Binder" && (
+            <BinderView
+              cards={binders[selected]}
+              includeReverse={false}
+              includeSubset={false}
+              subset={[]}
+              collection={[]}
+              collectionSelection={{ name: "wtf" }}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
