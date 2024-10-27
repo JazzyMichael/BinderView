@@ -8,6 +8,7 @@ import {
   BASE_URL,
   API_KEY,
 } from "./constants";
+import { getSetIdFromSlug } from "./slugs";
 
 export const searchCards = async (term: string) => {
   const url =
@@ -131,6 +132,60 @@ export const combineRarities = (obj1: any = {}, obj2: any = {}) => {
 
   return { ...obj1, ...obj2 };
 };
+
+export async function getCardsBySlug(slug: string) {
+  const id = getSetIdFromSlug(slug);
+
+  let cards: any[];
+  let subset: any = null;
+
+  const res = await fetch(
+    `${BASE_URL}/v2/cards?q=set.id:${id}&orderBy=number`,
+    {
+      next: { revalidate: 172800, tags: ["set", `${id}`] },
+      headers: { "X-Api-Key": API_KEY },
+    }
+  ).then((x) => x.json());
+
+  cards = [...res.data];
+
+  if (res.totalCount > res.count && res.page == 1) {
+    console.log(`Page 2 for Set: ${id}, ${res.totalCount} total cards`);
+
+    const pageTwo = await fetch(
+      `${BASE_URL}/v2/cards?q=set.id:${id}&orderBy=number&page=2`,
+      {
+        next: { revalidate: 172800, tags: ["set", `${id}`] },
+        headers: { "X-Api-Key": API_KEY },
+      }
+    ).then((x) => x.json());
+
+    cards = [...res.data, ...pageTwo.data];
+  }
+
+  for (const subsetID of Object.keys(subsetIDs)) {
+    if (subsetIDs[subsetID].mainSetID == id) {
+      const { data } = await fetch(
+        `${BASE_URL}/v2/cards?q=set.id:${subsetID}&orderBy=number`,
+        {
+          next: { revalidate: 172800, tags: ["set", `${id}`] },
+          headers: { "X-Api-Key": API_KEY },
+        }
+      ).then((x) => x.json());
+
+      subset = {
+        id: subsetID,
+        name: subsetIDs[subsetID].label,
+        mainSetID: id,
+        mainSetName: "",
+        cards: data,
+        rarities: getRarities(data),
+      };
+    }
+  }
+
+  return { cards, subset, rarities: getRarities(cards) };
+}
 
 export async function getCards(id: string) {
   let cards: any[];

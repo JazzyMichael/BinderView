@@ -1,24 +1,25 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getCardsBySlug } from "@/utilities/data";
 import SetCards from "@/components/SetCards";
-import { getCards } from "@/utilities/data";
-import { getSetIdFromSlug } from "@/utilities/slugs";
 
 type Props = {
   params: { slug: string };
 };
 
+// Generate static pages for each route at runtime
+// https://nextjs.org/docs/app/api-reference/functions/generate-static-params#all-paths-at-runtime
+
 export const revalidate = 172800; // 2 days
-// export const dynamic = "force-static";
-// export const dynamicParams = true;
+export const dynamic = "force-static";
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  return ["151", "paradox-rift"];
+  return [];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const setID = getSetIdFromSlug(params.slug);
-  const { cards } = await getCards(setID);
+  const { cards } = await getCardsBySlug(params.slug);
   const setName = cards[0]?.set?.name || "Full Set";
 
   return {
@@ -28,8 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SetPage({ params }: Props) {
-  const setID = getSetIdFromSlug(params.slug);
-  const { cards, subset, rarities } = await getCards(setID);
+  const { cards, subset, rarities } = await getCardsBySlug(params.slug);
 
   if (!cards?.length) redirect("/");
 
