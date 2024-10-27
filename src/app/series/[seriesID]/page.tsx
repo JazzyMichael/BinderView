@@ -21,7 +21,7 @@ type Props = {
 };
 
 // export const revalidate = 3600 * 24; // invalidate every 24 hours
-export const revalidate = 360000; // 100 hours
+export const revalidate = 172800; // 2 days
 // export const dynamic = "force-static"; // statically render all dynamic paths
 export const dynamicParams = true; // ensure dynamic isr is enabled
 

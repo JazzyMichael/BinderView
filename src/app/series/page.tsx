@@ -15,7 +15,7 @@ type Series = {
   cards: number;
 };
 
-export const revalidate = 360000;
+export const revalidate = 172800; // 2 days
 
 export async function generateMetadata() {
   return {

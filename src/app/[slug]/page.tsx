@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-// import { subsetIDs } from "@/utilities/constants";
 import SetCards from "@/components/SetCards";
 import { getCards } from "@/utilities/data";
 import { getSetIdFromSlug } from "@/utilities/slugs";
@@ -9,11 +8,11 @@ type Props = {
   params: { slug: string };
 };
 
-export const revalidate = 360000;
-// export const dynamic = "force-static"; // statically render all dynamic paths
-export const dynamicParams = true; // ensure dynamic isr is enabled
+export const revalidate = 172800; // 2 days
+// export const dynamic = "force-static";
+// export const dynamicParams = true;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return [];
 }
 

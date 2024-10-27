@@ -42,9 +42,9 @@ export const setSlugToId = {
   "rising-rivals": "pl2",
   platinum: "pl1",
   "call-of-legends": "col1",
-  "hs—triumphant": "hgss4",
-  "hs—undaunted": "hgss3",
-  "hs—unleashed": "hgss2",
+  "hs-triumphant": "hgss4",
+  "hs-undaunted": "hgss3",
+  "hs-unleashed": "hgss2",
   "heartgold-soulsilver": "hgss1",
   "legendary-treasures": "bw11",
   "plasma-blast": "bw10",
@@ -160,9 +160,9 @@ export const setIdToSlug = {
   pl2: "rising-rivals",
   pl1: "platinum",
   col1: "call-of-legends",
-  hgss4: "hs—triumphant",
-  hgss3: "hs—undaunted",
-  hgss2: "hs—unleashed",
+  hgss4: "hs-triumphant",
+  hgss3: "hs-undaunted",
+  hgss2: "hs-unleashed",
   hgss1: "heartgold-soulsilver",
   bw11: "legendary-treasures",
   bw10: "plasma-blast",
@@ -238,14 +238,3 @@ export const setIdToSlug = {
 
 export const getSlugFromSetId = (id: string) => setIdToSlug[id] ?? id;
 export const getSetIdFromSlug = (slug: string) => setSlugToId[slug] ?? slug;
-
-// const obj = {};
-
-// Object.entries(fulldata).forEach(([series, sets]: any) => {
-//   sets.forEach((set) => {
-//     obj[set.name.replaceAll(" &", "").replaceAll(" ", "-").toLowerCase()] =
-//       set.id;
-//   });
-// });
-
-// console.log({ obj });

@@ -53,7 +53,7 @@ export default function SeriesItem({
         {sets.map((set) => (
           <li key={set.id}>
             <Link
-              prefetch
+              prefetch={false}
               href={`/${getSlugFromSetId(set.id)}`}
               className={clsx(
                 "flex w-full py-2 px-4 border-l hover:border-indigo-600 opacity-80 hover:opacity-100",

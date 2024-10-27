@@ -28,7 +28,7 @@ export async function getSets() {
 
   const [english, japanese = []] = await Promise.all([
     await fetch(englishSetsUrl, {
-      next: { revalidate: 3600 * 24, tags: ["english-sets"] },
+      next: { revalidate: 172800, tags: ["english-sets"] },
       headers: { "X-Api-Key": API_KEY },
     }).then((res) => res.json()),
     // await fetch(japaneseSetsUrl, {
@@ -139,7 +139,7 @@ export async function getCards(id: string) {
   const res = await fetch(
     `${BASE_URL}/v2/cards?q=set.id:${id}&orderBy=number`,
     {
-      next: { revalidate: 3600 * 24, tags: ["set", `${id}`] },
+      next: { revalidate: 172800, tags: ["set", `${id}`] },
       headers: { "X-Api-Key": API_KEY },
     }
   ).then((x) => x.json());
@@ -152,7 +152,7 @@ export async function getCards(id: string) {
     const pageTwo = await fetch(
       `${BASE_URL}/v2/cards?q=set.id:${id}&orderBy=number&page=2`,
       {
-        next: { revalidate: 3600 * 24, tags: ["set", `${id}`] },
+        next: { revalidate: 172800, tags: ["set", `${id}`] },
         headers: { "X-Api-Key": API_KEY },
       }
     ).then((x) => x.json());
@@ -165,7 +165,7 @@ export async function getCards(id: string) {
       const { data } = await fetch(
         `${BASE_URL}/v2/cards?q=set.id:${subsetID}&orderBy=number`,
         {
-          next: { revalidate: 3600 * 24, tags: ["set", `${id}`] },
+          next: { revalidate: 172800, tags: ["set", `${id}`] },
           headers: { "X-Api-Key": API_KEY },
         }
       ).then((x) => x.json());

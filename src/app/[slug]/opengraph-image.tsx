@@ -5,7 +5,7 @@ import { ImageResponse } from "next/og";
 export const alt = "Full Card List";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const revalidate = 3600 * 24 * 7; // weekly
+export const revalidate = 172800; // 2 days
 
 export default async function Image({ params }: { params: { slug: string } }) {
   const { slug } = params;
@@ -19,9 +19,6 @@ export default async function Image({ params }: { params: { slug: string } }) {
     .sort((a, b) => {
       const aPrice = getPrice(a);
       const bPrice = getPrice(b);
-
-      // if (aPrice === 0) return -1;
-      // if (bPrice === 0) return 1;
 
       return aPrice < bPrice ? 1 : -1;
     })

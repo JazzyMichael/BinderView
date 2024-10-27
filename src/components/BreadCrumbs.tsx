@@ -39,6 +39,7 @@ export default function BreadCrumbs({
         <li className="flex">
           <div className="flex items-center">
             <Link
+              prefetch={false}
               href={`/series/${seriesURL}`}
               className="text-gray-500 hover:text-gray-800"
             >
