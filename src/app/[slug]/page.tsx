@@ -13,7 +13,7 @@ export const revalidate = 172800; // 2 days
 // export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  return [];
+  return ["151", "paradox-rift"];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
