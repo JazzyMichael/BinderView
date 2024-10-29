@@ -1,7 +1,7 @@
 export default function SizeSlider({
   size,
   min = "100",
-  max = "300",
+  max = "400",
   onChange,
 }: {
   size: string | number;

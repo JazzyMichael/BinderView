@@ -174,7 +174,7 @@ export default function Sidenav({
       className={clsx(
         "no-scrollbar transition-width duration-200",
         expanded ? (showPromos ? "w-96" : "w-72") : "w-24",
-        "h-full hidden md:block flex-none overflow-y-auto bg-gradient-to-b from-white to-sky-100"
+        "h-full hidden md:block flex-none overflow-y-auto bg-white"
       )}
     >
       {/* Static Icons */}

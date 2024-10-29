@@ -535,7 +535,7 @@ export default function SetCards({
               {card?.images?.small && (
                 <img
                   src={
-                    selectedCard === card.id
+                    selectedCard === card.id || parseInt(cardState.size) > 300
                       ? card.images.large
                       : card.images.small
                   }
