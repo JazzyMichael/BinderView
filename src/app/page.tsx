@@ -1,9 +1,9 @@
-import RandomSetButton from "@/components/RandomSetButton";
-import { getSets } from "@/utilities/data";
-import { getSlugFromSetId } from "@/utilities/slugs";
+// import RandomSetButton from "@/components/RandomSetButton";
+// import { getSets } from "@/utilities/data";
+// import { getSlugFromSetId } from "@/utilities/slugs";
+// import Image from "next/image";
+// import Link from "next/link";
 import { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -14,9 +14,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const { english } = await getSets();
-  const sets = english?.data ?? [];
-  const latestSet = sets[sets.length - 1];
+  // const { english } = await getSets();
+  // const sets = english?.data ?? [];
+  // const latestSet = sets[sets.length - 1];
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)] h-full overflow-auto">
