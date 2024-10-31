@@ -4,13 +4,15 @@ import { SyntheticEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  PaperAirplaneIcon,
   MagnifyingGlassIcon,
   QueueListIcon,
+  ArrowRightIcon,
 } from "@heroicons/react/24/solid";
 import useSearchCards from "@/hooks/useSearchCards";
+import LoadingAnimation from "@/components/LoadingAnimation";
+import { motion } from "framer-motion";
 
-// TODO: Make this shit a server a component
+// TODO: Server Component & Server Actions
 
 // import { Metadata } from "next";
 
@@ -23,7 +25,7 @@ import useSearchCards from "@/hooks/useSearchCards";
 // }
 
 export default function SearchPage() {
-  const { term, search, results } = useSearchCards();
+  const { term, search, results, loading } = useSearchCards();
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -49,20 +51,24 @@ export default function SearchPage() {
           />
         </div>
 
-        <button
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 500, damping: 10 }}
           type="submit"
           className="inline-flex w-full justify-center items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Search
-          <PaperAirplaneIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
-        </button>
+          <ArrowRightIcon className="h-6 w-6" />
+        </motion.button>
       </form>
 
-      {results?.length && term ? (
+      {results?.length && !loading ? (
         <div className="mt-4 mb-10 text-gray-700 italic">
           {results.length} results for &quot;{term}&quot;
         </div>
       ) : undefined}
+
+      {loading && <LoadingAnimation />}
 
       <div className="block m-2">
         {results.map((card: any) => (

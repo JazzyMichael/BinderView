@@ -90,6 +90,7 @@ export const BinderView = ({
                     (collectionSelection?.name !== "In Collection" && (
                       <img
                         src={c[`${size.page * i + i2}`]?.images?.small}
+                        alt={`${c[`${size.page * i + i2}`]?.name} Card`}
                         className={
                           c[`${size.page * i + i2}`]?.isReverse
                             ? "brightness-150 rounded"
@@ -101,6 +102,7 @@ export const BinderView = ({
                   {collectionSelection.name === "In Collection" && (
                     <img
                       src={c[`${size.page * i + i2}`].images?.small}
+                      alt={`${c[`${size.page * i + i2}`]?.name} Card`}
                       className={
                         c[`${size.page * i + i2}`].isReverse
                           ? collection[

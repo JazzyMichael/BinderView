@@ -47,7 +47,7 @@ export default function Binders() {
               value={newBinderName}
               onChange={(e) => setNewBinderName(e.target.value)}
               placeholder="New binder name"
-              className="flex-grow p-2 rounded-lg border border-2 border-slate-500"
+              className="flex-grow p-2 rounded-lg border-2 border-slate-500"
             />
             <motion.button
               disabled={Object.keys(binders).length > 4}
@@ -91,7 +91,7 @@ export default function Binders() {
                   deleteBinder(temp);
                   setSelected("");
                 }}
-                className="p-1 m-1 rounded-md bg-red-300 hover:bg-red-400"
+                className="py-1 px-2 m-1 rounded-md bg-red-300 hover:bg-red-500"
               >
                 Delete
               </button>
@@ -163,14 +163,17 @@ export default function Binders() {
 
       {selected && (
         <div className="flex flex-col w-full">
-          <button
-            className="ml-auto mr-5 mb-5 p-2 rounded-md border-2 border-slate-500 hover:bg-slate-100"
+          <motion.button
+            className="ml-auto mr-10 p-2 rounded-md border-2 border-slate-500 hover:bg-slate-100"
             onClick={() =>
               setView((val) => (val === "Reorder" ? "Binder" : "Reorder"))
             }
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             Switch to {view === "Reorder" ? "Binder" : "Reorder Grid"}
-          </button>
+          </motion.button>
 
           {view === "Reorder" && (
             <>

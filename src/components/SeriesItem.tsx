@@ -47,11 +47,11 @@ export default function SeriesItem({
       <ul
         className={clsx(
           "transition-all duration-300 overflow-hidden px-6 text-[0.9rem]",
-          expanded ? "max-h-[800px]" : "max-h-0"
+          expanded ? "max-h-[1000px]" : "max-h-0"
         )}
       >
         {sets.map((set) => (
-          <li key={set.id}>
+          <motion.li key={set.id} whileTap={{ scale: 0.9 }}>
             <Link
               prefetch={false}
               href={`/${getSlugFromSetId(set.id)}`}
@@ -72,7 +72,7 @@ export default function SeriesItem({
                 {set.name}
               </div>
             </Link>
-          </li>
+          </motion.li>
         ))}
       </ul>
     </div>

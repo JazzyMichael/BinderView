@@ -38,6 +38,7 @@ export default async function Sets() {
                       <Link href={`/${getSlugFromSetId(set.id)}`}>
                         <img
                           src={set.images.logo}
+                          alt={`${set.images.logo} Set Logo`}
                           className="mx-auto py-10 h-40"
                         />
                       </Link>

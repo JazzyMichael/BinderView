@@ -1,8 +1,8 @@
 "use client";
 
 import { getSlugFromSetId } from "@/utilities/slugs";
+import { GlobeAltIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -25,15 +25,10 @@ export default function RandomSetButton({ sets }: { sets: any[] }) {
     <motion.button
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className="min-w-fit rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
+      className="min-w-fit rounded-full transition-colors flex gap-3 items-center justify-center bg-black text-sky-200 hover:bg-[#383838] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
       onClick={viewRandomSet}
     >
-      <Image
-        src="https://nextjs.org/icons/vercel.svg"
-        alt="Vercel logomark"
-        width={20}
-        height={20}
-      />
+      <GlobeAltIcon className="h-5 w-5" />
       {label}
     </motion.button>
   );
