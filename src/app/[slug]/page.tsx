@@ -15,7 +15,7 @@ type Props = {
 // Generate static pages for each route at runtime
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params#all-paths-at-runtime
 
-export const revalidate = 172800; // 2 days
+export const revalidate = 432000; // 5 days
 export const dynamic = "force-static";
 export const dynamicParams = true;
 

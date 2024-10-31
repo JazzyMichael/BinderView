@@ -10,6 +10,7 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import ReorderGrid from "./ReorderGrid";
 import { BinderView } from "./BinderView";
+import SizeSlider from "./SizeSlider";
 
 export default function Binders() {
   const {
@@ -27,10 +28,11 @@ export default function Binders() {
 
   const [selected, setSelected] = useState("");
   const [view, setView] = useState("Reorder");
+  const [size, setSize] = useState(150);
 
   return (
     <>
-      <div className="flex flex-col lg:flex-row gap-10 justify-around mx-auto p-4 font-[family-name:var(--font-geist-sans)]">
+      <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start justify-around mx-auto p-4 font-[family-name:var(--font-geist-sans)]">
         <div className="flex-1 w-full max-w-2xl bg-white shadow-md rounded-lg overflow-hidden p-4 space-y-4">
           <form
             onSubmit={(e: FormEvent) => {
@@ -162,20 +164,29 @@ export default function Binders() {
       {selected && (
         <div className="flex flex-col w-full">
           <button
-            className="mx-auto p-2 rounded-md border border-2 border-slate-500 hover:bg-slate-100"
+            className="ml-auto mr-5 mb-5 p-2 rounded-md border-2 border-slate-500 hover:bg-slate-100"
             onClick={() =>
               setView((val) => (val === "Reorder" ? "Binder" : "Reorder"))
             }
           >
-            Toggle {view}
+            Switch to {view === "Reorder" ? "Binder" : "Reorder Grid"}
           </button>
 
           {view === "Reorder" && (
-            <ReorderGrid
-              cards={binders[selected]}
-              onReorder={(cards: any[]) => reorderCards(selected, cards)}
-              onRemove={(i: number) => removeCard(selected, i)}
-            />
+            <>
+              <SizeSlider
+                size={size}
+                onChange={setSize}
+                max={200}
+                showLabel={false}
+              />
+              <ReorderGrid
+                cards={binders[selected]}
+                size={size}
+                onReorder={(cards: any[]) => reorderCards(selected, cards)}
+                onRemove={(i: number) => removeCard(selected, i)}
+              />
+            </>
           )}
 
           {view === "Binder" && (

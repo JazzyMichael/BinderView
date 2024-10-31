@@ -17,8 +17,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Binder View",
-  description: "Vintage to Modern, and Everything in-between.",
+  title: "Binder View Pokemon Cards List",
+  description:
+    "Vintage to Modern, and Everything in-between. The best place to see full Pokemon card lists.",
 };
 
 export default async function RootLayout({

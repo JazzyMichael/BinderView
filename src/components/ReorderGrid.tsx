@@ -27,17 +27,17 @@ import { CSS } from "@dnd-kit/utilities";
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-const Grid = ({ children }) => {
+const Grid = ({ children, size = 150 }) => {
   return (
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: `repeat(auto-fit, 100px)`,
+        gridTemplateColumns: `repeat(auto-fit, ${size}px)`,
         gridGap: 10,
         justifyContent: "center",
         width: "100%",
-        maxWidth: "1200px",
-        margin: "48px auto",
+        maxWidth: "1500px",
+        margin: "24px auto",
         padding: "12px",
       }}
     >
@@ -91,7 +91,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
           src={card.images.small}
           alt={`${card.name} Card Image`}
           height={200}
-          width={120}
+          width={200}
         />
       </div>
     );
@@ -129,10 +129,12 @@ const SortableItem: FC<ItemProps> = (props) => {
 
 export default function ReorderGrid({
   cards,
+  size = 150,
   onReorder,
   onRemove,
 }: {
   cards: any[];
+  size?: number;
   onReorder?: any;
   onRemove?: any;
 }) {
@@ -173,7 +175,7 @@ export default function ReorderGrid({
         items={cards.map(({ id }) => id)}
         strategy={rectSortingStrategy}
       >
-        <Grid>
+        <Grid size={size}>
           {cards.map((card, i) => (
             <SortableItem
               key={`sortable-${card.id}-${i}`}

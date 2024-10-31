@@ -17,7 +17,7 @@ export default function BindersPage() {
   return (
     <>
       <div className="text-center mx-auto p-8 mb-4 font-[family-name:var(--font-geist-sans)] text-white bg-gradient-to-br from-indigo-500 to-blue-600">
-        <h1 className="text-2xl font-bold mb-4">Saved</h1>
+        <h1 className="text-2xl font-bold mb-4">Binders</h1>
         <p>Organize your Favorite Cards with Digital Binders</p>
       </div>
 

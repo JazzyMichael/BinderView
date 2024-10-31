@@ -25,7 +25,7 @@ type Props = {
   params: { seriesID: string };
 };
 
-export const revalidate = 172800; // 2 days
+export const revalidate = 345600; // 4 days
 export const dynamic = "force-static"; // statically render all dynamic paths
 export const dynamicParams = true; // ensure dynamic isr is enabled
 

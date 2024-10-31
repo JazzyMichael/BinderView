@@ -5,11 +5,10 @@ import { ImageResponse } from "next/og";
 export const alt = "Full Card List";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const revalidate = 172800; // 2 days
+export const revalidate = 432000; // 5 days
 
 export default async function Image({ params }: { params: { slug: string } }) {
-  const { slug } = params;
-  const setID = getSetIdFromSlug(slug);
+  const setID = getSetIdFromSlug(params.slug);
   const { cards } = await getCards(setID);
   const { name } = cards[0].set;
   const { logo } = cards[0].set.images;
@@ -53,7 +52,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
             <img
               key={card.id}
               src={card.images.small}
-              alt={card.name}
+              alt={`${card.name} Pokemon Card`}
               style={{ height: "256px", width: "164px", objectFit: "contain" }}
             />
           ))}
@@ -61,7 +60,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
 
         <img
           src={logo}
-          alt={name}
+          alt={`${name} Logo`}
           height={300}
           width={800}
           style={{

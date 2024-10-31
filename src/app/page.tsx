@@ -7,7 +7,7 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Binder View Pokemon Cards",
+    title: "Binder View Pokemon Cards List",
     description:
       "From Vintage to Modern, and everything in-between, BinderView provides the best digital binder experience for viewing pokemon cards.",
   };

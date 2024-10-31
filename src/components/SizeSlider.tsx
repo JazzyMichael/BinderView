@@ -1,21 +1,23 @@
 export default function SizeSlider({
   size,
-  min = "100",
-  max = "400",
+  min = 100,
+  max = 400,
   onChange,
+  showLabel = true,
 }: {
-  size: string | number;
-  min?: string | number;
-  max?: string | number;
+  size: number;
+  min?: number;
+  max?: number;
   onChange?: Function;
+  showLabel?: boolean;
 }) {
   return (
-    <div>
+    <div className="mx-auto">
       <label
         htmlFor="size"
         className="text-sm font-medium leading-6 text-gray-900 block"
       >
-        <p>Size</p>
+        {showLabel && <p>Size</p>}
         <p className="text-center text-indigo-900">{size}px</p>
       </label>
 
@@ -23,12 +25,12 @@ export default function SizeSlider({
         type="range"
         id="size"
         name="size"
+        step="4"
         min={min}
         max={max}
-        step="4"
         value={size}
         className="accent-indigo-500 block"
-        onChange={(e) => onChange && onChange(e.target.value)}
+        onChange={(e) => onChange && onChange(parseInt(`${e.target.value}`))}
       />
     </div>
   );
