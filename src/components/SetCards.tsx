@@ -23,6 +23,7 @@ import FlyoutMenu from "./FlyoutMenu";
 import { BinderView } from "./BinderView";
 import { motion } from "framer-motion";
 import { combineRarities, formatPrice, getPrice } from "@/utilities/data";
+import Image from "next/image";
 
 const labelOptions = [
   { label: "Name", value: "Name" },
@@ -263,10 +264,12 @@ export default function SetCards({
             </motion.button>
 
             {set ? (
-              <img
+              <Image
                 src={images.logo}
                 alt="Set Logo"
                 className="w-24 md:w-40 h-auto max-h-24 object-contain md:ml-2"
+                height={72}
+                width={96}
               />
             ) : (
               <div>Full {series} Series</div>
@@ -533,7 +536,7 @@ export default function SetCards({
               )}
 
               {card?.images?.small && (
-                <img
+                <Image
                   src={
                     selectedCard === card.id || parseInt(cardState.size) > 300
                       ? card.images.large
@@ -542,6 +545,8 @@ export default function SetCards({
                   alt={card.name + " Card"}
                   draggable="false"
                   className="object-contain w-full rounded-md max-h-[512px]"
+                  height={cardState.size}
+                  width={cardState.size}
                   onClick={() => {
                     if (selectedCard !== card.id) {
                       setSelectedCard(card.id);

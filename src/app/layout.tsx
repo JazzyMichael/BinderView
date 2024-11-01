@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Sidenav from "@/components/Sidenav";
 import { formatSets, sortSets, getSets } from "@/utilities/data";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = localFont({
   src: "../../public/fonts/GeistVF.woff",
@@ -20,6 +22,15 @@ export const metadata: Metadata = {
   title: "Binder View Pokemon Cards List",
   description:
     "Vintage to Modern, and Everything in-between. The best place to see full Pokemon card lists.",
+  applicationName: "BinderView",
+  openGraph: {
+    images: ["/screenshots/landing-page-opengraph.jpg"],
+    type: "website",
+    title: "Binder View Pokemon Cards List",
+    description:
+      "Vintage to Modern, and Everything in-between. The best place to see full Pokemon card lists.",
+    siteName: "BinderView",
+  },
 };
 
 export default async function RootLayout({
@@ -57,6 +68,8 @@ export default async function RootLayout({
         <main id="main-content" className="grow h-full overflow-y-auto">
           {children}
         </main>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

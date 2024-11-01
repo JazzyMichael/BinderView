@@ -11,6 +11,15 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Binder View Pokemon Cards List",
     description:
       "From Vintage to Modern, and everything in-between, BinderView provides the best digital binder experience for viewing pokemon cards.",
+    applicationName: "BinderView",
+    openGraph: {
+      images: ["/screenshots/landing-page-opengraph.jpg"],
+      type: "website",
+      url: "https://binderview.com",
+      title: "Pokemon Cards List",
+      description: "Sit back and enjoy the view. The Binder View.",
+      siteName: "BinderView",
+    },
   };
 }
 
@@ -24,7 +33,7 @@ export default async function Home() {
 
       <BentoGrid />
 
-      <Sets sets={sets.reverse().slice(0, 10)} />
+      <Sets sets={sets.slice(sets.length - 10, sets.length).reverse()} />
 
       <FAQ />
 
@@ -37,18 +46,18 @@ export default async function Home() {
 
 function Header({ sets }: { sets: Set[] }) {
   return (
-    <header className="w-full text-center p-20 bg-gradient-to-br from-slate-800 to-indigo-900 font-[family-name:var(--font-geist-mono)]">
+    <header className="w-full text-center p-6 sm:p-14 md:p-20 bg-gradient-to-br from-slate-800 to-indigo-900 font-[family-name:var(--font-geist-mono)]">
       <div className="flex gap-8 justify-center items-center">
         <Image
           src={"/icon-192.png"}
           alt={"Binderview Logo"}
           height={96}
           width={96}
-          className="shadow-xl shadow-black rounded-full"
+          className="shadow-xl shadow-black rounded-full h-12 w-12 md:h-24 md:w-24"
         />
 
-        <h2 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl font-[family-name:var(--font-geist-sans)]">
-          Binder View
+        <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-white font-[family-name:var(--font-geist-sans)]">
+          BinderView
         </h2>
       </div>
 
@@ -56,7 +65,7 @@ function Header({ sets }: { sets: Set[] }) {
         Vintage to Modern, and Everything In Between
       </p>
 
-      <div className="flex gap-4 items-center justify-center flex-col sm:flex-row">
+      <div className="flex flex-wrap gap-4 items-center justify-center flex-col sm:flex-row">
         <RandomSetButton sets={sets} />
 
         <Link
@@ -64,6 +73,14 @@ function Header({ sets }: { sets: Set[] }) {
           href={`/${getSlugFromSetId(sets[sets.length - 1].id)}`}
         >
           Latest Set
+        </Link>
+
+        <Link
+          prefetch={false}
+          className="hidden md:flex rounded-full border-2 border-fuchsia-400 text-fuchsia-100 transition-colors items-center justify-center hover:bg-fuchsia-400 hover:text-gray-900 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
+          href={`/series/scarlet-violet`}
+        >
+          Full Era
         </Link>
 
         <Link
@@ -79,7 +96,7 @@ function Header({ sets }: { sets: Set[] }) {
 
 function BentoGrid() {
   return (
-    <div className="bg-slate-100 py-20 sm:py-24">
+    <div className="bg-slate-100 py-20 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
         <h2 className="text-base/7 font-semibold text-indigo-600">
           Explore all the sets
@@ -94,10 +111,12 @@ function BentoGrid() {
           <div className="relative lg:col-span-3">
             <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]">
-              <img
-                alt=""
-                src="https://tailwindui.com/plus/img/component-images/bento-01-performance.png"
-                className="h-80 object-cover object-left"
+              <Image
+                alt="Binder View Screenshot"
+                src={"/screenshots/binder-view.jpg"}
+                height={630}
+                width={1200}
+                className="h-80 object-cover object-top"
               />
               <div className="p-10 pt-4">
                 <h3 className="text-sm/4 font-semibold text-indigo-600">
@@ -118,10 +137,12 @@ function BentoGrid() {
           <div className="relative lg:col-span-3">
             <div className="absolute inset-px rounded-lg bg-white lg:rounded-tr-[2rem]" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]">
-              <img
-                alt=""
-                src="https://tailwindui.com/plus/img/component-images/bento-01-releases.png"
+              <Image
+                alt="Full Era View"
+                src={"/screenshots/full-era.jpg"}
                 className="h-80 object-cover object-left lg:object-right"
+                height={630}
+                width={1200}
               />
               <div className="p-10 pt-4">
                 <h3 className="text-sm/4 font-semibold text-indigo-600">
@@ -142,10 +163,12 @@ function BentoGrid() {
           <div className="relative lg:col-span-2">
             <div className="absolute inset-px rounded-lg bg-white lg:rounded-bl-[2rem]" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]">
-              <img
-                alt=""
-                src="https://tailwindui.com/plus/img/component-images/bento-01-speed.png"
+              <Image
+                alt="Side Menu Showcase"
+                src={"/screenshots/side-menu.jpg"}
                 className="h-80 object-cover object-left"
+                height={630}
+                width={1200}
               />
               <div className="p-10 pt-4">
                 <h3 className="text-sm/4 font-semibold text-indigo-600">
@@ -157,8 +180,8 @@ function BentoGrid() {
                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
                   Quickly switch between sets with the Binder View menu. No more
                   going back and forth between pages to load different sets of
-                  cards. This is the most efficient way to explore all the
-                  cards.
+                  cards. Collapse the side menu to open up the view. This is the
+                  most efficient way to explore all the cards.
                 </p>
               </div>
             </div>
@@ -167,10 +190,12 @@ function BentoGrid() {
           <div className="relative lg:col-span-2">
             <div className="absolute inset-px rounded-lg bg-white" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
-              <img
-                alt=""
-                src="https://tailwindui.com/plus/img/component-images/bento-01-integrations.png"
-                className="h-80 object-cover object-center"
+              <Image
+                alt="Digital Binders Overview"
+                src={"/screenshots/binder-page.jpg"}
+                className="h-80 object-cover object-left lg:object-right"
+                height={630}
+                width={1200}
               />
               <div className="p-10 pt-4">
                 <h3 className="text-sm/4 font-semibold text-indigo-600">
@@ -180,12 +205,10 @@ function BentoGrid() {
                   Digital Binders
                 </p>
                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
-                  In addition to tracking completion for each set, save cards to
-                  your collection that are from different sets and series. Put
-                  together a trade binder before a card show, or group all the
-                  cards you&apos;re looking for ahead of time, or just put all
-                  the eeveelutions together from every set ever. It&apos;s your
-                  digital collection!
+                  Create a trade binder before an event, a wishlist of the
+                  biggest hits, or just put all the eeveelutions together in one
+                  place - our digital binders offer unlimited organization
+                  capabilities for your digital collection!
                 </p>
               </div>
             </div>
@@ -194,10 +217,12 @@ function BentoGrid() {
           <div className="relative lg:col-span-2">
             <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-br-[calc(2rem+1px)]">
-              <img
-                alt=""
-                src="https://tailwindui.com/plus/img/component-images/bento-01-network.png"
-                className="h-80 object-cover object-center"
+              <Image
+                alt="Control Labels and Size"
+                src={"/screenshots/labels-size-control.jpg"}
+                className="h-80 object-cover object-left lg:object-right"
+                height={630}
+                width={1200}
               />
               <div className="p-10 pt-4">
                 <h3 className="text-sm/4 font-semibold text-indigo-600">
@@ -208,8 +233,9 @@ function BentoGrid() {
                 </p>
                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
                   Choose to show the price, name, numbers, or just the images
-                  for each card - PLUS change the size of the cards so they fit
-                  exactly how they look best.
+                  for each card - PLUS change the size of the cards with the
+                  size slider so they fit in the screen exactly how they look
+                  best.
                 </p>
               </div>
             </div>
@@ -225,12 +251,18 @@ function Sets({ sets }: { sets: Set[] }) {
   return (
     <div className="flex flex-wrap flex-col gap-4 w-full h-64 p-8 overflow-x-auto justify-center">
       {sets.map((set) => (
-        <img
+        <Link
           key={`landing-page-set-${set.id}`}
-          src={set.images.logo}
-          alt={`${set.name} Logo`}
-          className="w-60 max-h-40 p-5"
-        />
+          href={`/${getSlugFromSetId(set.id)}`}
+        >
+          <Image
+            src={set.images.logo}
+            alt={`${set.name} Logo`}
+            className="w-60 max-h-40 p-5"
+            height={160}
+            width={240}
+          />
+        </Link>
       ))}
     </div>
   );
@@ -272,7 +304,7 @@ const faqs: Array<{ question: string; answer: string }> = [
 function FAQ() {
   return (
     <div className="bg-slate-100">
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:py-64 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
             Frequently Asked Questions
@@ -307,10 +339,12 @@ function Testimonial() {
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-x-8 gap-y-10 px-6 sm:gap-y-8 lg:px-8 lg:flex-row lg:items-stretch">
           <div className="-mt-8 w-full max-w-2xl md:-mb-8 md:w-96 md:max-w-[50%] md:flex-none">
             <div className="relative aspect-[2/1] h-[90%] max-h-[800px] md:-mx-8 lg:mx-0 lg:aspect-auto">
-              <img
+              <Image
                 alt="AI depiction of Professor Oak"
-                src={"/prof-oak-gpt.webp"}
+                src={"/prof-oak-gpt.jpg"}
                 className="absolute inset-0 h-full max-h-[800px] w-full rounded-2xl bg-gray-800 object-cover object-[top_30%_right_50%] shadow-2xl"
+                width={1024}
+                height={1792}
               />
             </div>
           </div>
@@ -358,10 +392,10 @@ function Footer() {
         &copy; Binderview Inc, {new Date().getFullYear()}. All Rights Reserved.
       </p>
       <p className="text-xs">
-        <Link href="/terms" className="hover:underline mr-1">
+        <Link href="/terms" className="hover:underline mr-1" prefetch={false}>
           Terms
         </Link>
-        <Link href="/privacy" className="hover:underline ml-1">
+        <Link href="/privacy" className="hover:underline ml-1" prefetch={false}>
           Privacy
         </Link>
       </p>

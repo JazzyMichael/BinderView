@@ -24,7 +24,7 @@ export default function Binders() {
     reorderCards,
   } = useBinders();
 
-  const { search, results } = useSearchCards();
+  const { search, results, removeFromResults } = useSearchCards();
 
   const [selected, setSelected] = useState("");
   const [view, setView] = useState("Reorder");
@@ -118,18 +118,21 @@ export default function Binders() {
                 onChange={(e: any) => search(e?.currentTarget?.value ?? "")}
                 placeholder="Add Cards"
                 className={clsx(
-                  "flex-grow text-center p-2 border border-0 border-slate-500",
+                  "flex-grow text-center p-2 border-0",
                   results?.length ? "rounded-t-lg" : "rounded-lg"
                 )}
               />
             </form>
 
-            <div className=" max-w-2xl max-h-[360px] overflow-auto m-auto">
+            <div className="max-w-2xl max-h-[300px] overflow-auto m-auto">
               {results.map((x, i) => (
                 <motion.div
                   key={x.id + "i" + i}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => addCard(selected, x)}
+                  onClick={() => {
+                    addCard(selected, x);
+                    removeFromResults(x.id);
+                  }}
                   className="p-2 bg-slate-100 hover:bg-slate-200 border border-1 border-slate-400 flex gap-4 w-full"
                 >
                   <Image
@@ -161,7 +164,7 @@ export default function Binders() {
         )}
       </div>
 
-      {selected && (
+      {selected && !!binders[selected].length && (
         <div className="flex flex-col w-full">
           <motion.button
             className="ml-auto mr-10 p-2 rounded-md border-2 border-slate-500 hover:bg-slate-100"

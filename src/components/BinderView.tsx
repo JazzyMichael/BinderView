@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BinderLayoutSelect from "./BinderLayoutSelect";
 import { BinderTypes } from "@/utilities/constants";
+import Image from "next/image";
 
 export const BinderView = ({
   initialType = 3,
@@ -83,46 +84,58 @@ export const BinderView = ({
                 <div
                   key={`${i}-${i2}`}
                   className={` ${
-                    size.page * i + i2 + 1 < c.length ? "" : "bg-gray-500"
+                    size.page * i + i2 + 1 < c.length
+                      ? ""
+                      : "bg-gray-500 rounded"
                   }`}
                 >
-                  {!collectionSelection ||
-                    (collectionSelection?.name !== "In Collection" && (
-                      <img
-                        src={c[`${size.page * i + i2}`]?.images?.small}
-                        alt={`${c[`${size.page * i + i2}`]?.name} Card`}
-                        className={
-                          c[`${size.page * i + i2}`]?.isReverse
-                            ? "brightness-150 rounded"
-                            : "rounded"
-                        }
-                      />
-                    ))}
-
-                  {collectionSelection.name === "In Collection" && (
-                    <img
-                      src={c[`${size.page * i + i2}`].images?.small}
-                      alt={`${c[`${size.page * i + i2}`]?.name} Card`}
-                      className={
-                        c[`${size.page * i + i2}`].isReverse
-                          ? collection[
-                              c[`${size.page * i + i2}`].id + "-reverse"
-                            ]
-                            ? `${
-                                c[`${size.page * i + i2}`].isReverse
-                                  ? "brightness-125 hue-rotate-30"
-                                  : ""
-                              }`
-                            : "brightness-50"
-                          : collection[c[`${size.page * i + i2}`].id]
-                          ? `${
+                  {!!c[`${size.page * i + i2}`] ? (
+                    <>
+                      {!collectionSelection ||
+                        (collectionSelection?.name !== "In Collection" && (
+                          <Image
+                            height={256}
+                            width={200}
+                            src={c[`${size.page * i + i2}`].images.small}
+                            alt={`${c[`${size.page * i + i2}`].name} Card`}
+                            className={
                               c[`${size.page * i + i2}`].isReverse
-                                ? "brightness-125 hue-rotate-30"
-                                : ""
-                            }`
-                          : "brightness-50"
-                      }
-                    />
+                                ? "rounded brightness-150"
+                                : "rounded"
+                            }
+                          />
+                        ))}
+
+                      {collectionSelection.name === "In Collection" && (
+                        <Image
+                          height={256}
+                          width={200}
+                          src={c[`${size.page * i + i2}`].images.small}
+                          alt={`${c[`${size.page * i + i2}`].name} Card`}
+                          className={
+                            c[`${size.page * i + i2}`].isReverse
+                              ? collection[
+                                  c[`${size.page * i + i2}`].id + "-reverse"
+                                ]
+                                ? `${
+                                    c[`${size.page * i + i2}`].isReverse
+                                      ? "brightness-125 hue-rotate-30"
+                                      : ""
+                                  }`
+                                : "brightness-50"
+                              : collection[c[`${size.page * i + i2}`].id]
+                              ? `${
+                                  c[`${size.page * i + i2}`].isReverse
+                                    ? "brightness-125 hue-rotate-30"
+                                    : ""
+                                }`
+                              : "brightness-50"
+                          }
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <div></div>
                   )}
                 </div>
               ))}

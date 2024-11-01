@@ -27,5 +27,13 @@ export default function useSearchCards() {
     setTimer(debounced);
   };
 
-  return { term, search, results, loading };
+  const removeFromResults = (id: string) => {
+    setResults((x: any[]) => {
+      const i = x.findIndex((x) => x.id == id);
+      x.splice(i, 1);
+      return [...x];
+    });
+  };
+
+  return { term, search, results, removeFromResults, loading };
 }

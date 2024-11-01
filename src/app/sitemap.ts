@@ -7,6 +7,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://binderview.com";
 
   const highPriority = {
+    "stellar-crown": true,
+    "surging-sparks": true,
     "evolving-skies": true,
     "151": true,
     "neo-genesis": true,
@@ -21,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, priority: 0.6, changeFrequency: "monthly" },
     { url: `${baseUrl}/search`, priority: 0.5, changeFrequency: "yearly" },
-    { url: `${baseUrl}/binders`, priority: 0.5, changeFrequency: "yearly" },
+    { url: `${baseUrl}/binders`, priority: 0.5, changeFrequency: "monthly" },
     { url: `${baseUrl}/sets`, priority: 0.8, changeFrequency: "monthly" },
     { url: `${baseUrl}/series`, priority: 0.8, changeFrequency: "monthly" },
   ];

@@ -54,11 +54,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${pretty} Pokemon Cards`,
+    title: `${pretty} Full Era Pokemon Cards`,
     description:
       "THE ENTIRE SERIES/ERA/GENERATION AT ONCE on the BinderView Platform",
     openGraph: {
       images,
+      title: `${pretty} Full Era Pokemon Cards`,
+      description:
+        "THE ENTIRE SERIES/ERA/GENERATION AT ONCE on the BinderView Platform",
     },
   };
 }

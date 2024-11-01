@@ -27,7 +27,7 @@ import {
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import SeriesItem from "./SeriesItem";
-import { getSlugFromSetId } from "@/utilities/slugs";
+import { getSetIdFromSlug, getSlugFromSetId } from "@/utilities/slugs";
 
 function formatDate(date: string) {
   const [year, month] = date.split("/");
@@ -98,10 +98,12 @@ export default function Sidenav({
     console.log({ raw });
   }
 
-  const selectedSetID =
+  const slug =
     usePathname()
       ?.split("/")
       .reduce((a, v) => v) || "";
+
+  const selectedSetID = getSetIdFromSlug(slug);
 
   const [expanded, setExpanded] = useState(true);
   const [searchRegex, setSearchRegex] = useState(new RegExp("", "i"));
