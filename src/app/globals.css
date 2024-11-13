@@ -9,6 +9,7 @@
   }
 }
 
+/* attempt to reduce text blur during animation */
 .backface-hidden {
   transform: translateZ(0);
   -webkit-font-smoothing: subpixel-antialiased;
@@ -38,13 +39,4 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-.glass {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
 }

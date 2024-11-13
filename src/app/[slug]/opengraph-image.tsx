@@ -5,7 +5,7 @@ import { ImageResponse } from "next/og";
 export const alt = "Pokemon Card List";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const revalidate = 432000; // 5 days
+export const revalidate = 864000; // 10 days
 
 export default async function Image({ params }: { params: { slug: string } }) {
   const setID = getSetIdFromSlug(params.slug);

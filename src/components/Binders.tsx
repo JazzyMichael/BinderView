@@ -32,7 +32,7 @@ export default function Binders() {
 
   return (
     <>
-      <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start justify-around mx-auto p-4 font-[family-name:var(--font-geist-sans)]">
+      <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start justify-around mx-auto p-4 font-geist-sans">
         <div className="flex-1 w-full max-w-2xl bg-white shadow-md rounded-lg overflow-hidden p-4 space-y-4">
           <form
             onSubmit={(e: FormEvent) => {

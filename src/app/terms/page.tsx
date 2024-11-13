@@ -8,7 +8,7 @@ export function generateMetadata() {
 
 export default function TermsPage() {
   return (
-    <div className="font-[family-name:var(--font-geist-sans)] flex flex-col items-center gap-10 p-10">
+    <div className="font-geist-sans flex flex-col items-center gap-10 p-10">
       <h1 className="text-2xl">Terms of Service</h1>
 
       <p>

@@ -28,7 +28,7 @@ export default async function Home() {
   const sets = english?.data ?? [];
 
   return (
-    <div className="font-[family-name:var(--font-geist-sans)] h-full overflow-auto">
+    <div className="font-geist-sans h-full overflow-auto">
       <Header sets={sets} />
 
       <BentoGrid />
@@ -46,7 +46,7 @@ export default async function Home() {
 
 function Header({ sets }: { sets: Set[] }) {
   return (
-    <header className="w-full text-center p-6 sm:p-14 md:p-20 bg-gradient-to-br from-slate-800 to-indigo-900 font-[family-name:var(--font-geist-mono)]">
+    <header className="w-full text-center p-6 sm:p-14 md:p-20 bg-gradient-to-br from-slate-800 to-indigo-900 font-geist-mono">
       <div className="flex gap-8 justify-center items-center">
         <Image
           src={"/icon-192.png"}
@@ -56,7 +56,7 @@ function Header({ sets }: { sets: Set[] }) {
           className="shadow-xl shadow-black rounded-full h-12 w-12 md:h-24 md:w-24"
         />
 
-        <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-white font-[family-name:var(--font-geist-sans)]">
+        <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-white font-geist-sans">
           BinderView
         </h2>
       </div>
@@ -317,7 +317,7 @@ function FAQ() {
           <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:gap-x-10">
             {faqs.map((faq, i) => (
               <div key={i}>
-                <dt className="text-base font-semibold leading-7 text-gray-900 font-[family-name:var(--font-geist-mono)]">
+                <dt className="text-base font-semibold leading-7 text-gray-900 font-geist-mono">
                   {faq.question}
                 </dt>
                 <dd className="mt-2 text-base leading-7 text-gray-600">

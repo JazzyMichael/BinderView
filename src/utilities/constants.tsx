@@ -119,11 +119,3 @@ export const OtherPromos = {
   ru1: true,
   fut20: true,
 };
-
-export const series = {
-  base: [""],
-  neo: [""],
-  "e-series": [""],
-  ex: [""],
-  "diamond-pearl-platinum": [""],
-};

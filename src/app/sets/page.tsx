@@ -3,6 +3,8 @@ import { getSets, formatSets } from "@/utilities/data";
 import { Metadata } from "next";
 import { getSlugFromSetId } from "@/utilities/slugs";
 import Image from "next/image";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { Set } from "@/utilities/types";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -19,39 +21,52 @@ export default async function Sets() {
   delete seriesData.Promos;
   delete seriesData.SubSets;
 
-  const omitted: any = { sve: true };
-
   return (
     <>
-      <h1 className="text-xl text-center py-4 mb-4 bg-slate-100">Sets</h1>
+      <h1 className="text-xl text-center font-geist-sans py-4 mb-2 bg-slate-100">
+        Sets
+      </h1>
 
-      <div className="w-full">
-        {Object.entries(seriesData)
-          .reverse()
-          .filter(([series, sets]: any) => !(!sets || series.Promos))
-          .map(([series, sets]: any) => (
-            <div key={series}>
-              <h4 className="ml-5 text-lg">{series}</h4>
-              <ul>
-                {sets.map((set: any) => (
-                  <li key={set.id} className="px-6 hover:bg-slate-600">
-                    {!omitted[set.id] && (
-                      <Link href={`/${getSlugFromSetId(set.id)}`}>
+      <TabGroup>
+        <TabList className="flex gap-2 overflow-x-auto whitespace-nowrap snap-mandatory snap-x pt-2 pb-4 px-3">
+          {Object.keys(seriesData)
+            .reverse()
+            .map((key) => (
+              <Tab
+                key={`sets-tab-${key}`}
+                className="snap-center data-[selected]:bg-indigo-400 data-[selected]:text-white data-[hover]:underline rounded-xl py-2 px-4"
+              >
+                {key}
+              </Tab>
+            ))}
+        </TabList>
+        <TabPanels>
+          {Object.values(seriesData)
+            .reverse()
+            .map((sets: Set[], i: number) => (
+              <TabPanel key={`sets-tab-panel-${i}`}>
+                <ul>
+                  {sets.map((set: any) => (
+                    <li key={set.id} className="px-6 hover:bg-slate-500">
+                      <Link
+                        href={`/${getSlugFromSetId(set.id)}`}
+                        prefetch={false}
+                      >
                         <Image
                           src={set.images.logo}
                           alt={`${set.images.logo} Set Logo`}
-                          className="mx-auto py-10 h-40"
-                          height={160}
-                          width={160}
+                          className="m-auto p-10"
+                          height={135}
+                          width={336}
                         />
                       </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-      </div>
+                    </li>
+                  ))}
+                </ul>
+              </TabPanel>
+            ))}
+        </TabPanels>
+      </TabGroup>
     </>
   );
 }

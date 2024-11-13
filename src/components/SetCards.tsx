@@ -172,10 +172,11 @@ export default function SetCards({
   rarities,
   initialRaritySelection = [],
   seriesView,
-  set,
   sets = [],
+  set,
   subset,
 }: any) {
+  // const set = cards?.length ? cards[0].set : '';
   const { name, series, releaseDate, images } = set || sets[0];
   const router = useRouter();
   const scrollDirection = useScrollDirection();
@@ -409,13 +410,13 @@ export default function SetCards({
 
       {/* regular view */}
       {view !== "binder" && cardState?.cardList && (
-        <ul className="flex flex-wrap justify-center gap-4 my-6 font-[family-name:var(--font-geist-sans)]">
+        <ul className="flex flex-wrap justify-center gap-4 my-6 font-geist-sans">
           {cardState.cardList.map((card: any, i: number) => (
             <li
               id={card.id}
               key={`setcards-${card.id}-${i}`}
               className={clsx(
-                "glass p-1 rounded-md flex flex-col justify-between items-center relative",
+                "bg-indigo-900 bg-opacity-15 p-1 rounded-lg shadow-2xl flex flex-col justify-between items-center relative",
                 selectedCard === card.id
                   ? "w-[95%] lg:w-[60%] transition-width duration-500"
                   : "h-fit transition-width duration-200"
@@ -560,16 +561,16 @@ export default function SetCards({
                   className="text-center"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <p className="my-2">{card.rarity}</p>
+                  <p className="my-2">
+                    {card.rarity} - {card.set.name}
+                  </p>
                   <Link
                     href={card.tcgplayer?.url ?? "#"}
                     target={card.tcgplayer?.url ? "_blank" : "_self"}
                     className="flex items-center justify-center gap-2 px-1 hover:text-slate-600 border-b-2 border-transparent hover:border-slate-600"
                   >
-                    <p>
-                      TCG Player{card.tcgplayer?.url ? "" : " Not Available"}
-                    </p>
-                    <ArrowTopRightOnSquareIcon className="h-4 w-4" />
+                    <p>TCG Player {formatPrice(getPrice(card))} </p>
+                    <ArrowTopRightOnSquareIcon className="h-4 w-4 mb-1" />
                   </Link>
                 </div>
               )}

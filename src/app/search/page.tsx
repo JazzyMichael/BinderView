@@ -74,12 +74,19 @@ export default function SearchPage() {
         {results.map((card: any) => (
           <div
             key={card.id}
-            className="inline-block text-center m-2 shadow-lg shadow-indigo-800 pt-2"
+            className="inline-block text-center m-2 shadow-lg rounded-lg shadow-indigo-800 pt-2"
           >
             <p>{card.name}</p>
-            <Link href={card.set.id}>{card.set.name}</Link>
+            <Link
+              prefetch={false}
+              href={card.set.id}
+              className="underline text-sm"
+            >
+              {card.set.name}
+            </Link>
             <p>{card.set.series}</p>
             <Image
+              loading={"lazy"}
               src={card.images.small}
               alt={card.name}
               width={220}

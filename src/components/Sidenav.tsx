@@ -9,6 +9,7 @@ import {
   ArrowsUpDownIcon,
   BookOpenIcon,
 } from "@heroicons/react/24/outline";
+import { XCircleIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import {
   Tooltip,
@@ -106,9 +107,10 @@ export default function Sidenav({
   const selectedSetID = getSetIdFromSlug(slug);
 
   const [expanded, setExpanded] = useState(true);
+  const [setSearchTerm, setSetSearchTerm] = useState("");
   const [searchRegex, setSearchRegex] = useState(new RegExp("", "i"));
   const [sort, setSort] = useState("Newest");
-  const [showPromos, setShowPromos] = useState(false);
+  const [showPromos, setShowPromos] = useState(true);
   const [scope, animate] = useAnimate();
   const [fadeAnimation, setFadeAnimation] = useState<any>();
 
@@ -146,6 +148,7 @@ export default function Sidenav({
   };
 
   function handleSearch(term: string) {
+    setSetSearchTerm(term);
     setSearchRegex(new RegExp(term, "i"));
   }
 
@@ -175,7 +178,7 @@ export default function Sidenav({
     <nav
       className={clsx(
         "no-scrollbar transition-width duration-200",
-        expanded ? (showPromos ? "w-96" : "w-72") : "w-24",
+        expanded ? (showPromos ? "w-[21rem]" : "w-72") : "w-24",
         "h-full hidden md:block flex-none overflow-y-auto bg-white"
       )}
     >
@@ -213,7 +216,7 @@ export default function Sidenav({
         <div
           onMouseDown={toggleExpand}
           className={clsx(
-            "h-full flex items-center text-indigo-800 bg-indigo-100 hover:bg-indigo-200 absolute z-50 rounded-l-2xl cursor-pointer -right-0 top-0",
+            "h-full flex items-center text-indigo-800 bg-indigo-100 hover:bg-indigo-200 absolute z-50 rounded-l-full cursor-pointer -right-0 top-0",
             expanded ? "w-9 pl-2" : "w-6 pl-1"
           )}
         >
@@ -227,7 +230,7 @@ export default function Sidenav({
       <div className="my-2 mx-1 flex rounded-md shadow-sm h-10">
         {expanded && (
           <div className="relative flex flex-grow items-stretch focus-within:z-10">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
               <MagnifyingGlassIcon
                 className="h-4 w-4 text-gray-400"
                 aria-hidden="true"
@@ -237,8 +240,20 @@ export default function Sidenav({
               type="text"
               className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6"
               placeholder="Search sets..."
+              value={setSearchTerm}
               onChange={(e) => handleSearch(e.target.value)}
             />
+            {setSearchTerm && (
+              <div
+                className="cursor-pointer absolute inset-y-0 right-2 flex items-center"
+                onClick={() => handleSearch("")}
+              >
+                <XCircleIcon
+                  className="h-5 w-5 text-gray-500 hover:text-gray-400"
+                  aria-hidden="true"
+                />
+              </div>
+            )}
           </div>
         )}
 
@@ -248,20 +263,6 @@ export default function Sidenav({
           className={expanded ? "rounded-r-md" : "rounded-md"}
         />
       </div>
-
-      {/* Promos */}
-      {expanded &&
-        showPromos &&
-        promos &&
-        Object.entries(promos).map(([series, sets]: any) => (
-          <SeriesItem
-            key={series}
-            name={series}
-            sets={sets}
-            selectedSetID={selectedSetID}
-            onClick={handleSeriesItemClick}
-          />
-        ))}
 
       {/* Expanded Set List */}
       {expanded &&
@@ -291,6 +292,36 @@ export default function Sidenav({
               sets={sets
                 .filter((set: any) => searchRegex.test(set.name))
                 .sort(() => (sort === "Oldest" ? -1 : 1))}
+            />
+          ))}
+
+      {/* Promos */}
+      {expanded &&
+        showPromos &&
+        promos &&
+        Object.entries(promos)
+          .filter(([series, sets]: any) => {
+            if (!sets || series.Promos) {
+              return false;
+            }
+
+            if (sets) {
+              for (const set of sets) {
+                if (searchRegex.test(set.name)) {
+                  return true;
+                }
+              }
+            }
+
+            return false;
+          })
+          .map(([series, sets]: any) => (
+            <SeriesItem
+              key={series}
+              name={series}
+              sets={sets.filter((set: any) => searchRegex.test(set.name))}
+              selectedSetID={selectedSetID}
+              onClick={handleSeriesItemClick}
             />
           ))}
 

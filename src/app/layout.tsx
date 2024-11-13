@@ -56,13 +56,14 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-mono)] antialiased flex h-screen overflow-none`}
+        className={`${geistSans.variable} ${geistMono.variable} font-geist-mono antialiased flex h-screen overflow-none`}
       >
         <Sidenav
           fulldata={dupe}
           promos={promos}
           oldestSort={sortSets("Oldest", fullItems)}
           newestSort={sortSets("Newest", fullItems)}
+          // raw={seriesData}
         />
 
         <main id="main-content" className="grow h-full overflow-y-auto">

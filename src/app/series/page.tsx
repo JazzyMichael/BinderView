@@ -28,20 +28,19 @@ export default async function SeriesListPage() {
   delete seriesData.Promos;
   delete seriesData.SubSets;
 
-  const seriesList: Series[] =
-    Object.entries(seriesData)
-      .map(
-        ([series, sets]: [string, any[]]): Series => ({
-          id: seriesNameToSlug(series),
-          name: series,
-          sets: sets.length,
-          cards: sets.reduce((prev, cur) => cur.total + prev, 0),
-        })
-      )
-      .reverse() ?? [];
+  const seriesList: Series[] = Object.entries(seriesData)
+    .map(
+      ([series, sets]: [string, any[]]): Series => ({
+        id: seriesNameToSlug(series),
+        name: series,
+        sets: sets.length,
+        cards: sets.reduce((prev, cur) => cur.total + prev, 0),
+      })
+    )
+    .reverse();
 
   return (
-    <div className="flex flex-col gap-10 items-center font-[family-name:var(--font-geist-sans)]">
+    <div className="flex flex-col gap-10 items-center font-geist-sans">
       <h1 className="my-10 text-lg">View a Full Series</h1>
 
       <ul className="mx-auto">
@@ -50,9 +49,9 @@ export default async function SeriesListPage() {
             <Link
               prefetch={false}
               href={`/series/${series.id}`}
-              className="p-3 block hover:bg-gray-200"
+              className="p-3 block hover:bg-gray-100 rounded-md"
             >
-              {series.name}, {series.sets} sets, {series.cards} cards
+              {series.name}: {series.sets} sets, {series.cards} cards
             </Link>
           </li>
         ))}

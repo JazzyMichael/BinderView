@@ -44,10 +44,10 @@ export function formatSets(sets: any[]) {
   const seriesList: any = {
     Promos: {
       "Black Star Promos": [],
-      POP: [],
+      "POP Series": [],
       "McDonalds Promos": [],
       "EX Trainer Kits": [],
-      Other: [],
+      "Other Promos": [],
     },
     SubSets: {},
   };
@@ -57,12 +57,13 @@ export function formatSets(sets: any[]) {
 
     // @ts-ignore
     if (BlackStarPromos[set.id]) {
+      set.name = set.name.replace("Scarlet & Violet", "SV");
       seriesList["Promos"]["Black Star Promos"].unshift(set);
       promoFlag = true;
     }
     // @ts-ignore
     if (PopPromos[set.id]) {
-      seriesList["Promos"]["POP"].unshift(set);
+      seriesList["Promos"]["POP Series"].unshift(set);
       promoFlag = true;
     }
 
@@ -80,7 +81,7 @@ export function formatSets(sets: any[]) {
 
     // @ts-ignore
     if (OtherPromos[set.id]) {
-      seriesList["Promos"]["Other"].unshift(set);
+      seriesList["Promos"]["Other Promos"].unshift(set);
       promoFlag = true;
     }
 
@@ -147,7 +148,7 @@ export async function getCardsBySlug(slug: string) {
     }
   ).then((x) => x.json());
 
-  cards = [...res.data];
+  cards = (id && res && [...res.data]) || [];
 
   if (res.totalCount > res.count && res.page == 1) {
     console.log(`Page 2 for Set: ${id}, ${res.totalCount} total cards`);
@@ -272,7 +273,7 @@ export const getPrice = (card: any, useFirstEdition = false) => {
 };
 
 export const formatPrice = (price: number) => {
-  if (!price) return "n/a";
+  if (!price) return "-_-";
 
   return new Intl.NumberFormat("en-US", {
     style: "currency",
