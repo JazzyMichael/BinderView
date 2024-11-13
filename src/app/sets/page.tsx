@@ -6,6 +6,8 @@ import Image from "next/image";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { Set } from "@/utilities/types";
 
+export const revalidate = 86400; // every day
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Cards List of Every Set on Binder View",

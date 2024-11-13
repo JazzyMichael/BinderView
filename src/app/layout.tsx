@@ -18,7 +18,7 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const revalidate = 100000;
+export const revalidate = 86400; // every day
 
 export const metadata: Metadata = {
   title: "Binder View Pokemon Cards List",
@@ -71,6 +71,7 @@ export default async function RootLayout({
         <main id="main-content" className="grow h-full overflow-y-auto">
           {children}
         </main>
+
         <Analytics />
         <SpeedInsights />
       </body>

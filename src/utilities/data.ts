@@ -29,7 +29,7 @@ export async function getSets() {
 
   const [english, japanese = []] = await Promise.all([
     await fetch(englishSetsUrl, {
-      next: { revalidate: 172800, tags: ["english-sets"] },
+      next: { revalidate: 172800 },
       headers: { "X-Api-Key": API_KEY },
     }).then((res) => res.json()),
     // await fetch(japaneseSetsUrl, {
