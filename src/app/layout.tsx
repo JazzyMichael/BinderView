@@ -18,6 +18,8 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+export const revalidate = 100000;
+
 export const metadata: Metadata = {
   title: "Binder View Pokemon Cards List",
   description:
