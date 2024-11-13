@@ -6,6 +6,21 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { Set } from "@/utilities/types";
 
+// export const metadata: Metadata = {
+//   title: "Binder View Pokemon Cards List",
+//   description:
+//     "Vintage to Modern, and Everything in-between. The best place to see full Pokemon card lists.",
+//   applicationName: "BinderView",
+//   openGraph: {
+//     images: ["/screenshots/landing-page-opengraph.jpg"],
+//     type: "website",
+//     title: "Binder View Pokemon Cards List",
+//     description:
+//       "Vintage to Modern, and Everything in-between. The best place to see full Pokemon card lists.",
+//     siteName: "BinderView",
+//   },
+// };
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Binder View Pokemon Cards List",

@@ -29,6 +29,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${setName} Card List - BinderView Pokemon Cards`,
     description: `BinderView is the best way to experience everything ${setName} has to offer.`,
+    applicationName: "BinderView",
+    openGraph: {
+      type: "website",
+      title: `${setName} Card List - BinderView Pokemon Cards`,
+      description:
+        "Vintage to Modern, and Everything in-between. The best place to see full Pokemon card lists.",
+      siteName: "BinderView",
+    },
   };
 }
 

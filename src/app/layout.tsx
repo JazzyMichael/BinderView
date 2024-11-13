@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Sidenav from "@/components/Sidenav";
@@ -19,21 +18,6 @@ const geistMono = localFont({
 });
 
 export const revalidate = 86400; // every day
-
-export const metadata: Metadata = {
-  title: "Binder View Pokemon Cards List",
-  description:
-    "Vintage to Modern, and Everything in-between. The best place to see full Pokemon card lists.",
-  applicationName: "BinderView",
-  openGraph: {
-    images: ["/screenshots/landing-page-opengraph.jpg"],
-    type: "website",
-    title: "Binder View Pokemon Cards List",
-    description:
-      "Vintage to Modern, and Everything in-between. The best place to see full Pokemon card lists.",
-    siteName: "BinderView",
-  },
-};
 
 export default async function RootLayout({
   children,
