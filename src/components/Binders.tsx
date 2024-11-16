@@ -200,6 +200,7 @@ export default function Binders() {
 
           {view === "Binder" && (
             <BinderView
+              cardTotal={binders[selected].length}
               cards={binders[selected]}
               includeReverse={false}
               includeSubset={false}
