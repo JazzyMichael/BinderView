@@ -14,7 +14,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
   const { logo } = cards[0].set.images;
 
   // Top cards to show in preview
-  const arr = (subset?.cards?.length ? [...subset, ...cards] : cards)
+  const arr = (subset?.cards?.length ? [...subset.cards, ...cards] : cards)
     .sort((a, b) => (getPrice(a) < getPrice(b) ? 1 : -1))
     .slice(0, 21);
 
