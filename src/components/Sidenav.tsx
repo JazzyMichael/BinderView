@@ -87,16 +87,16 @@ export default function Sidenav({
   promos,
   oldestSort,
   newestSort,
-  raw,
+  debug,
 }: {
   fulldata: any;
   promos: any[];
   oldestSort: any[];
   newestSort: any[];
-  raw?: any;
+  debug?: any;
 }) {
-  if (raw) {
-    console.log({ raw });
+  if (debug) {
+    console.log({ debug });
   }
 
   const slug =

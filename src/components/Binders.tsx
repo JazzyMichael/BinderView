@@ -11,6 +11,7 @@ import { FormEvent, useState } from "react";
 import ReorderGrid from "./ReorderGrid";
 import { BinderView } from "./BinderView";
 import SizeSlider from "./SizeSlider";
+import { getSlugFromSetId } from "@/utilities/slugs";
 
 export default function Binders() {
   const {
@@ -144,7 +145,9 @@ export default function Binders() {
                   <div className="flex flex-col items-start justify-around">
                     <p>{x.name}</p>
                     <p>
-                      <Link href={`/${x.set.id}`}>{x.set.name} </Link>
+                      <Link href={`/${getSlugFromSetId(x.set.id)}`}>
+                        {x.set.name}{" "}
+                      </Link>
                       <span className="text-sm text-slate-900 mx-2">
                         {x.rarity}{" "}
                       </span>
