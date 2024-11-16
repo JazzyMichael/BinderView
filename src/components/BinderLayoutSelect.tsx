@@ -56,10 +56,7 @@ export default function BinderLayoutSelect({
                   <div
                     key={`${i}-${option.cols}x${option.rows}`}
                     onClick={() => {
-                      onSelect({
-                        ...option,
-                        pages: calculatePages(option, totalCards),
-                      });
+                      onSelect(option);
                       close();
                     }}
                     onMouseEnter={() => setHoverOption(option)}
@@ -67,7 +64,7 @@ export default function BinderLayoutSelect({
                     className={clsx(
                       "cursor-pointer rounded-lg p-4 hover:bg-gray-100 flex justify-center items-center gap-8",
                       selected.cols === option.cols
-                        ? "border border-2 border-gray-200"
+                        ? "border-2 border-gray-200"
                         : "border-none"
                     )}
                   >

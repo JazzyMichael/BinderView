@@ -2,32 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* default from tailwind */
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-/* attempt to reduce text blur during animation */
-.backface-hidden {
-  transform: translateZ(0);
-  -webkit-font-smoothing: subpixel-antialiased;
-  backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-}
-
 :root {
   --background: #c9ddff;
   --foreground: #171717;
-}
-
-body {
-  color: var(--foreground);
-  background: linear-gradient(35deg, #f5f9ff, #b9d3ff);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -39,4 +16,14 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+/* attempt to reduce text blur during animation */
+.backface-hidden {
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+  backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
 }

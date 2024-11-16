@@ -11,6 +11,7 @@ import {
 import useSearchCards from "@/hooks/useSearchCards";
 import LoadingAnimation from "@/components/LoadingAnimation";
 import { motion } from "framer-motion";
+import { getSlugFromSetId } from "@/utilities/slugs";
 
 // TODO: Server Component & Server Actions
 
@@ -79,7 +80,7 @@ export default function SearchPage() {
             <p>{card.name}</p>
             <Link
               prefetch={false}
-              href={card.set.id}
+              href={`/${getSlugFromSetId(card.set.id)}`}
               className="underline text-sm"
             >
               {card.set.name}

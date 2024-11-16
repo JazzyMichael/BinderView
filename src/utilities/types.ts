@@ -33,6 +33,19 @@ export type Set = {
   updatedAt: string;
 };
 
+export type Rarities = {
+  [key: string]: number;
+};
+
+export type Subset = {
+  id: string;
+  name: string;
+  mainSetID: string;
+  mainSetName: string;
+  cards: Card[];
+  rarities: Rarities;
+};
+
 export type SetImage = {
   symbol: string;
   logo: string;

@@ -6,6 +6,7 @@ import Image from "next/image";
 export const BinderView = ({
   initialType = 3,
   cards,
+  cardTotal,
   includeReverse,
   includeSubset,
   subset,
@@ -14,6 +15,7 @@ export const BinderView = ({
 }: {
   initialType?: 2 | 3 | 4;
   cards: any[];
+  cardTotal: number;
   includeReverse: boolean;
   includeSubset: boolean;
   subset: any;
@@ -30,29 +32,25 @@ export const BinderView = ({
 
   if (includeSubset && subset?.cards) {
     subset.cards.forEach((card: any) => c.push(card));
+    cardTotal += subset.cards.length;
   }
-
-  const cardTotal = c?.length ?? 0;
 
   const { cols, rows, page } = BinderTypes[initialType];
   const [size, setSize] = useState({ cols, rows, page });
   const [pageCards, setPageCards] = useState<boolean[]>(
     new Array(page).fill(true)
   );
-  const [totalPages, setTotalPages] = useState<boolean[]>([]);
+  const [renderedPages, setRenderedPages] = useState<boolean[]>([]);
 
-  const refreshBinder = ({ cols, rows, pages }: any) => {
+  const refreshBinder = ({ cols, rows }: any) => {
     const page = cols * rows;
     setSize({ cols, rows, page });
     setPageCards(new Array(page).fill(true));
-    setTotalPages(new Array(pages).fill(true));
   };
 
   useEffect(() => {
-    const partialPage = cardTotal % size.page ? 1 : 0;
-    const pages = Math.floor(cardTotal / size.page) + partialPage;
-    refreshBinder({ cols: 3, rows: 3, pages });
-  }, []);
+    setRenderedPages(new Array(Math.ceil(c.length / page)).fill(true));
+  }, [cards]);
 
   return (
     <div className="text-center my-10">
@@ -68,7 +66,7 @@ export const BinderView = ({
         (!c?.length && <div>Not available in binder view.</div>)}
 
       {collectionSelection?.name !== "Not in Collection" &&
-        totalPages.map((_, i) => (
+        renderedPages.map((_, i) => (
           <div key={i} className="inline-block">
             <div className="text-sm">Page {i + 1}</div>
             <div

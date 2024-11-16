@@ -49,10 +49,12 @@ export default async function RootLayout({
           promos={promos}
           oldestSort={sortSets("Oldest", fullItems)}
           newestSort={sortSets("Newest", fullItems)}
-          // raw={seriesData}
         />
 
-        <main id="main-content" className="grow h-full overflow-y-auto">
+        <main
+          id="main-content"
+          className="grow h-full overflow-y-auto shadow-inset-lg"
+        >
           {children}
         </main>
 

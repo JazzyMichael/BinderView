@@ -9,6 +9,7 @@ import {
   API_KEY,
 } from "./constants";
 import { getSetIdFromSlug } from "./slugs";
+import { Card, Rarities, Subset } from "./types";
 
 export const searchCards = async (term: string) => {
   const url =
@@ -116,7 +117,7 @@ export const sortSets = (type: "Oldest" | "Newest", items: any[]) => {
   });
 };
 
-export const getRarities = (cards: any[] = []) => {
+export const getRarities = (cards: Card[] = []): Rarities => {
   return cards.reduce((acc, { rarity = "Energy" }) => {
     acc[rarity] = !acc[rarity] ? 1 : acc[rarity] + 1;
     return acc;
@@ -137,8 +138,8 @@ export const combineRarities = (obj1: any = {}, obj2: any = {}) => {
 export async function getCardsBySlug(slug: string) {
   const id = getSetIdFromSlug(slug);
 
-  let cards: any[];
-  let subset: any = null;
+  let cards: Card[];
+  let subset: Subset = null;
 
   const res = await fetch(
     `${BASE_URL}/v2/cards?q=set.id:${id}&orderBy=number`,
