@@ -9,12 +9,12 @@ export const revalidate = 864000; // 10 days
 
 export default async function Image({ params }: { params: { slug: string } }) {
   const setID = getSetIdFromSlug(params.slug);
-  const { cards } = await getCards(setID);
+  const { cards, subset } = await getCards(setID);
   const { name } = cards[0].set;
   const { logo } = cards[0].set.images;
 
   // Top cards to show in preview
-  const arr = cards
+  const arr = (subset?.length ? [...subset, ...cards] : cards)
     .sort((a, b) => (getPrice(a) < getPrice(b) ? 1 : -1))
     .slice(0, 21);
 
