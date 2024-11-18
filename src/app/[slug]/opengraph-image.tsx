@@ -1,4 +1,5 @@
 import { getCardsBySlug, getPrice } from "@/utilities/data";
+import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 
 export const alt = "Pokemon Card List";
@@ -10,17 +11,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
   const { cards, subset } = await getCardsBySlug(params.slug);
 
   if (!cards?.length) {
-    return new ImageResponse(
-      (
-        <img
-          src={"https://binderview.com/screenshots/binder-page.jpg"}
-          alt={`BinderView card list screenshot`}
-          height={size.height}
-          width={size.width}
-        />
-      ),
-      size
-    );
+    notFound();
   }
 
   const { name } = cards[0].set;
