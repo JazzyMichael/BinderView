@@ -23,8 +23,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { cards = [] } = await getCardsBySlug(params.slug);
-  const setName = cards[0]?.set?.name || "Full Set";
+  const { cards } = await getCardsBySlug(params.slug);
+  const setName = (cards?.length && cards[0]?.set?.name) || "Full Set";
 
   return {
     title: `${setName} Card List - BinderView Pokemon Cards`,
