@@ -92,7 +92,7 @@ const cardReducer = (state: any, action: any) => {
     state;
 
   const filterOptions = Object.entries(
-    combineRarities(rarities, includeSubset && subset?.rarities)
+    combineRarities(rarities, includeSubset == "true" && subset?.rarities)
   ).map(([rarity, count]: any) => ({
     label: `${rarity} (${count})`,
     value: rarity,
@@ -100,13 +100,22 @@ const cardReducer = (state: any, action: any) => {
 
   // ---------
 
-  const list =
-    subset && includeSubset == "true"
-      ? [...cards, ...subset.cards]
-      : [...cards];
+  const totalCards = [...cards, ...(subset?.cards ?? [])];
 
-  const cardList = list
+  const totalCount = totalCards.length;
+
+  const totalPrice = formatPrice(
+    totalCards.reduce((prev, cur) => prev + getPrice(cur), 0)
+  );
+
+  // ---------
+
+  const selectedCards = totalCards
     .filter((x) => {
+      if (isNaN(parseInt(x.number)) && includeSubset !== "true") {
+        return false;
+      }
+
       return raritySelection && Object.keys(raritySelection)?.length
         ? raritySelection[x.rarity]
         : true;
@@ -148,9 +157,19 @@ const cardReducer = (state: any, action: any) => {
       return 1;
     });
 
+  const selectedCount = selectedCards.length;
+
+  const selectedPrice = formatPrice(
+    selectedCards.reduce((prev, cur) => prev + getPrice(cur), 0)
+  );
+
   return {
     ...state,
-    cardList,
+    selectedCards,
+    selectedCount,
+    selectedPrice,
+    totalCount,
+    totalPrice,
     filterOptions,
   };
 };
@@ -209,22 +228,25 @@ export default function SetCards({
   const [hasMore, setHasMore] = useState(true);
   const [loadedCards, setLoadedCards] = useState([]);
   const loadMore = () => {
-    if (loadedCards.length === cardState.cardList.length) {
+    if (loadedCards.length === cardState.selectedCards.length) {
       setHasMore(false);
     } else {
       setLoadedCards(
-        cardState.cardList.slice(
+        cardState.selectedCards.slice(
           0,
-          Math.min(cardState.cardList.length, loadedCards.length + 50)
+          Math.min(cardState.selectedCards.length, loadedCards.length + 50)
         )
       );
     }
   };
 
   useEffect(() => {
-    if (cardState?.cardList?.length) {
+    if (cardState?.selectedCards?.length) {
       setLoadedCards(
-        cardState.cardList.slice(0, Math.min(cardState.cardList.length, 50))
+        cardState.selectedCards.slice(
+          0,
+          Math.min(cardState.selectedCards.length, 50)
+        )
       );
 
       if (!hasMore) {
@@ -304,15 +326,16 @@ export default function SetCards({
             cardCountLabel={
               set ? formatDate(releaseDate) : `${sets.length} sets`
             }
-            cardCount={`${cardState.cards.length}`}
+            cardCount={cardState.totalCount}
+            totalPrice={cardState.totalPrice}
             activeViewId={view}
             onViewChange={(x: string) => {
               setView(x);
               setInitialView(x);
               setLoadedCards(
-                cardState.cardList.slice(
+                cardState.selectedCards.slice(
                   0,
-                  Math.min(cardState.cardList.length, 50)
+                  Math.min(cardState.selectedCards.length, 50)
                 )
               );
               setHasMore(true);
@@ -347,9 +370,45 @@ export default function SetCards({
 
             {/* left side */}
             <div className="hidden md:flex flex-col p-2 justify-between">
-              {/* <p className="text-sm font-medium text-gray-700">{total} cards</p> */}
+              {seriesView &&
+                cardState.label.price &&
+                cardState.selectedCount < cardState.totalCount && (
+                  <div className="text-sm flex gap-5 justify-between">
+                    <div className="text-end">
+                      <p>
+                        {cardState.selectedCount}
+                        <span className="text-xs"> cards</span>
+                      </p>
+                      <p className="text-xs font-semibold font-geist-sans">
+                        {Math.round(
+                          100 *
+                            (parseInt(cardState.selectedCount) /
+                              parseInt(cardState.totalCount))
+                        )}
+                        %
+                      </p>
+                    </div>
 
-              {subset && cardState && (
+                    <div className="text-start">
+                      <p>
+                        {cardState.selectedPrice.substring(
+                          0,
+                          cardState.selectedPrice.length - 3
+                        )}
+                      </p>
+                      <p className="text-xs font-semibold font-geist-sans">
+                        {Math.round(
+                          100 *
+                            (parseFloat(cardState.selectedPrice.substring(1)) /
+                              parseFloat(cardState.totalPrice.substring(1)))
+                        )}
+                        %
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+              {subset && (
                 <div className="flex mt-2">
                   <div className="flex items-center h-5">
                     <input
@@ -385,7 +444,7 @@ export default function SetCards({
                 </div>
               )}
 
-              {view === "binder" && !seriesView && cardState?.cardList && (
+              {view === "binder" && !seriesView && cardState.selectedCards && (
                 <div className="flex mt-2">
                   <div className="flex items-center h-5">
                     <input
@@ -420,7 +479,7 @@ export default function SetCards({
             <div className="hidden lg:flex gap-2">
               {view !== "binder" && (
                 <SizeSlider
-                  size={cardState?.size}
+                  size={cardState.size}
                   onChange={(value: number) => {
                     cardDispatch({ type: "size", value });
                   }}
@@ -429,7 +488,7 @@ export default function SetCards({
 
               <ComboSelect
                 label="Filter"
-                options={cardState?.filterOptions}
+                options={cardState.filterOptions}
                 initialSelection={initialRaritySelection}
                 onChange={(selection: any[]) => {
                   cardDispatch({ type: "filter", value: selection });
@@ -438,7 +497,7 @@ export default function SetCards({
 
               {!seriesView && (
                 <SortSelect
-                  initial={cardState?.sortId}
+                  initial={cardState.sortId}
                   onChange={(selection: any) => {
                     cardDispatch({ type: "sort", value: selection?.id });
                   }}
@@ -449,8 +508,8 @@ export default function SetCards({
                 <ComboSelect
                   label="Labels"
                   noSelectionLabel="None"
-                  options={cardState?.labelOptions}
-                  initialSelection={cardState?.labelInitial}
+                  options={cardState.labelOptions}
+                  initialSelection={cardState.labelInitial}
                   onChange={(selection: any[]) => {
                     cardDispatch({ type: "label", value: selection });
                   }}
@@ -464,7 +523,7 @@ export default function SetCards({
                 <div className="flex flex-col gap-2 p-2">
                   {view !== "binder" && (
                     <SizeSlider
-                      size={cardState?.size}
+                      size={cardState.size}
                       max={300}
                       onChange={(value: number) => {
                         cardDispatch({ type: "size", value });
@@ -474,7 +533,7 @@ export default function SetCards({
 
                   <ComboSelect
                     label="Filter"
-                    options={cardState?.filterOptions}
+                    options={cardState.filterOptions}
                     initialSelection={initialRaritySelection}
                     onChange={(selection: any[]) => {
                       cardDispatch({ type: "filter", value: selection });
@@ -482,7 +541,7 @@ export default function SetCards({
                   />
 
                   <SortSelect
-                    initial={cardState?.sortId}
+                    initial={cardState.sortId}
                     onChange={(selection: any) => {
                       cardDispatch({ type: "sort", value: selection?.id });
                     }}
@@ -492,8 +551,8 @@ export default function SetCards({
                     <ComboSelect
                       label="Labels"
                       noSelectionLabel="None"
-                      options={cardState?.labelOptions}
-                      initialSelection={cardState?.labelInitial}
+                      options={cardState.labelOptions}
+                      initialSelection={cardState.labelInitial}
                       onChange={(selection: any[]) => {
                         cardDispatch({ type: "label", value: selection });
                       }}
@@ -506,7 +565,7 @@ export default function SetCards({
         </header>
       )}
 
-      {cardState?.cardList && (
+      {cardState?.selectedCards && (
         <InfiniteScroll
           pageStart={0}
           loadMore={loadMore}
@@ -517,7 +576,7 @@ export default function SetCards({
           {view === "binder" && (
             <BinderView
               cards={loadedCards}
-              cardTotal={cardState.cardList.length}
+              cardTotal={cardState.selectedCards.length}
               includeReverse={cardState.includeReverse == "true" ? true : false}
               includeSubset={!!cardState.includeSubset}
               subset={subset}
@@ -558,7 +617,7 @@ export default function SetCards({
 
                   {cardState?.label.save && selectedCard !== card.id && (
                     <div className="absolute top-0 right-0">
-                      <Popover className="relative isolate z-50">
+                      <Popover className="relative isolate z-30">
                         {({ open }) => (
                           <>
                             <PopoverButton className="inline-flex h-5 w-5 items-center justify-center rounded-full">
@@ -681,10 +740,10 @@ export default function SetCards({
 
                   {selectedCard === card.id && (
                     <div
-                      className="text-center"
+                      className="text-center py-2"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <p className="my-2">
+                      <p className="mb-2">
                         {card.rarity} - {card.set.name}
                       </p>
                       <Link

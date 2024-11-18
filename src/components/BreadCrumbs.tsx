@@ -6,13 +6,15 @@ export default function BreadCrumbs({
   set,
   cardCountLabel,
   cardCount,
+  totalPrice,
   activeViewId,
   onViewChange,
 }: {
   series: string;
   set?: string;
   cardCountLabel: string;
-  cardCount: string;
+  cardCount: number;
+  totalPrice: string;
   activeViewId?: string;
   onViewChange?: Function;
 }) {
@@ -63,14 +65,14 @@ export default function BreadCrumbs({
               </svg>
               <a
                 href="#"
-                className="ml-3 text-sm font-medium flex flex-col gap-1 space-between hover:text-gray-700"
+                className="ml-3 font-medium flex flex-col gap-1 space-between hover:text-gray-700"
                 onClick={() => {
                   document
                     ?.getElementById(`series-${series.replaceAll(" ", "-")}`)
-                    ?.scrollIntoView();
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                <span className="text-md text-gray-500">{set}</span>
+                <span className="text-gray-500">{set}</span>
               </a>
             </div>
           </li>
@@ -89,7 +91,9 @@ export default function BreadCrumbs({
           </svg>
           <div className="flex flex-col justify-between py-1 pl-4 items-start text-xs font-bold text-gray-500">
             <span>{cardCountLabel}</span>
-            <span>{cardCount} cards</span>
+            <span>
+              {cardCount} cards, {totalPrice}
+            </span>
           </div>
         </li>
 

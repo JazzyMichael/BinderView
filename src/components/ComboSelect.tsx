@@ -59,7 +59,10 @@ export default function ComboSelect({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <ListboxOptions className="absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <ListboxOptions
+                anchor={{ to: "bottom end", gap: "1px" }}
+                className="absolute z-40 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+              >
                 {options.map((option, idx) => (
                   <ListboxOption
                     key={`${option.value}-${idx}`}

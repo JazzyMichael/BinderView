@@ -53,7 +53,7 @@ export default async function RootLayout({
 
         <main
           id="main-content"
-          className="grow h-full overflow-y-auto shadow-inset-lg"
+          className="grow h-full overflow-y-auto shadow-inset-lg bg-slate-50"
         >
           {children}
         </main>

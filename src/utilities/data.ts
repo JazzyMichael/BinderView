@@ -135,11 +135,19 @@ export const combineRarities = (obj1: any = {}, obj2: any = {}) => {
   return { ...obj1, ...obj2 };
 };
 
-export async function getCardsBySlug(slug: string) {
+export async function getCardsBySlug(slug: string): Promise<{
+  cards: Card[];
+  subset: Subset;
+  rarities: Rarities;
+}> {
   const id = getSetIdFromSlug(slug);
 
+  if (!id) {
+    return { cards: null, subset: null, rarities: null };
+  }
+
   let cards: Card[];
-  let subset: Subset = null;
+  let subset: Subset;
 
   const res = await fetch(
     `${BASE_URL}/v2/cards?q=set.id:${id}&orderBy=number`,

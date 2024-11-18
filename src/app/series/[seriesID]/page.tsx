@@ -90,7 +90,10 @@ export default async function SeriesPage({ params }: Props) {
 
   const sets = await Promise.all(combinedSets.map(({ id }) => getCards(id)));
 
-  const combinedCards = sets.reduce((prev, cur) => [...prev, ...cur.cards], []);
+  const combinedCards = sets.reduce(
+    (prev, cur) => [...prev, ...cur.cards, ...(cur.subset?.cards ?? [])],
+    []
+  );
 
   const combinedRarities = getRarities(combinedCards);
 
