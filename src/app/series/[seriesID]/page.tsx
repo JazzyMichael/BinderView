@@ -1,17 +1,13 @@
-import {
-  getSets,
-  formatSets,
-  getRarities,
-  getCards,
-  seriesNameToSlug,
-} from "@/utilities/data";
+import { getSets, getSetCards } from "@/utilities/data";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 // import SetCards from "@/components/SetCards";
 import lazy from "next/dynamic";
+import { seriesNameToSlug } from "@/utilities/slugs";
+import { formatSets, getRarities } from "@/utilities/formatting";
 
 const SetCards = lazy(() => import("@/components/SetCards"), {
-  ssr: false,
+  // ssr: false,
 });
 
 type Series = {
@@ -22,7 +18,7 @@ type Series = {
 };
 
 type Props = {
-  params: { seriesID: string };
+  params: Promise<{ seriesID: string }>;
 };
 
 export const revalidate = 345600; // 4 days
@@ -34,7 +30,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { seriesID } = params;
+  const { seriesID } = await params;
 
   const pretty = seriesID
     .split("-")
@@ -67,6 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SeriesPage({ params }: Props) {
+  const { seriesID } = await params;
   const { english } = await getSets();
   const seriesData = formatSets(english.data);
 
@@ -82,13 +79,13 @@ export default async function SeriesPage({ params }: Props) {
     })
   );
 
-  const series = seriesList.find((x) => x.id === params.seriesID);
+  const series = seriesList.find((x) => x.id === seriesID);
 
   if (!series) redirect("/series");
 
   const combinedSets = series.sets.flat();
 
-  const sets = await Promise.all(combinedSets.map(({ id }) => getCards(id)));
+  const sets = await Promise.all(combinedSets.map(({ id }) => getSetCards(id)));
 
   const combinedCards = sets.reduce(
     (prev, cur) => [...prev, ...cur.cards, ...(cur.subset?.cards ?? [])],

@@ -4,26 +4,27 @@ import { getCardsBySlug } from "@/utilities/data";
 import lazy from "next/dynamic";
 
 const SetCards = lazy(() => import("@/components/SetCards"), {
-  ssr: false,
+  // ssr: false,
 });
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 // Generate static pages for each route at runtime
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params#all-paths-at-runtime
 
-export const revalidate = 432000; // 5 days
-export const dynamic = "force-static";
-export const dynamicParams = true;
+// export const revalidate = 432000; // 5 days
+// export const dynamic = "force-static";
+// export const dynamicParams = true;
 
 export async function generateStaticParams() {
   return [];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { cards } = await getCardsBySlug(params.slug);
+  const { slug } = await params;
+  const { cards } = await getCardsBySlug(slug);
   const setName = (cards?.length && cards[0]?.set?.name) || "Full Set";
 
   return {
@@ -41,7 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SetPage({ params }: Props) {
-  const { cards, subset, rarities } = await getCardsBySlug(params.slug);
+  const { slug } = await params;
+  const { cards, subset, rarities } = await getCardsBySlug(slug);
 
   if (!cards?.length) redirect("/");
 

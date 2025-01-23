@@ -1,4 +1,5 @@
-import { getCardsBySlug, getPrice } from "@/utilities/data";
+import { getCardsBySlug } from "@/utilities/data";
+import { getPrice } from "@/utilities/formatting";
 import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 

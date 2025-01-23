@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import dynamic from "next/dynamic";
 
 const BindersComponent = dynamic(() => import("@/components/Binders"), {
-  ssr: false,
+  // ssr: false,
 });
 
 export async function generateMetadata(): Promise<Metadata> {

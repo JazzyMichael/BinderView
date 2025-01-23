@@ -1,5 +1,6 @@
-import { formatSets, getSets, seriesNameToSlug } from "@/utilities/data";
-import { getSlugFromSetId } from "@/utilities/slugs";
+import { getSets } from "@/utilities/data";
+import { formatSets } from "@/utilities/formatting";
+import { getSlugFromSetId, seriesNameToSlug } from "@/utilities/slugs";
 import { Set } from "@/utilities/types";
 import { MetadataRoute } from "next";
 
@@ -7,8 +8,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://binderview.com";
 
   const highPriority = {
-    "stellar-crown": true,
+    "prismatic-evolutions": true,
     "surging-sparks": true,
+    "stellar-crown": true,
     "evolving-skies": true,
     "151": true,
     "neo-genesis": true,

@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { getSets, formatSets } from "@/utilities/data";
+import { getSets } from "@/utilities/data";
 import { Metadata } from "next";
 import { getSlugFromSetId } from "@/utilities/slugs";
 import Image from "next/image";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { Set } from "@/utilities/types";
+import { formatSets } from "@/utilities/formatting";
 
-export const revalidate = 86400; // every day
+// export const revalidate = 86400; // every day
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
