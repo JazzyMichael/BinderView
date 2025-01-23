@@ -5,10 +5,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { motion } from "framer-motion";
-import { getSlugFromSetId } from "@/utilities/slugs";
+import { motion } from "motion/react";
+import { getSlugFromSetId, seriesNameToSlug } from "@/utilities/slugs";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { seriesNameToSlug } from "@/utilities/data";
 
 export default function SeriesItem({
   name,

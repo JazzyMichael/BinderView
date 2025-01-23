@@ -1,9 +1,10 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Sidenav from "@/components/Sidenav";
-import { formatSets, sortSets, getSets } from "@/utilities/data";
+import { getSets } from "@/utilities/data";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { formatSets, sortSets } from "@/utilities/formatting";
 
 const geistSans = localFont({
   src: "../../public/fonts/GeistVF.woff",
@@ -17,7 +18,7 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const revalidate = 86400; // every day
+// export const revalidate = 86400; // every day
 
 export default async function RootLayout({
   children,

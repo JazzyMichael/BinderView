@@ -1,4 +1,6 @@
-import { formatSets, getSets, seriesNameToSlug } from "@/utilities/data";
+import { getSets } from "@/utilities/data";
+import { formatSets } from "@/utilities/formatting";
+import { seriesNameToSlug } from "@/utilities/slugs";
 import Link from "next/link";
 
 type Series = {

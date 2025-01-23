@@ -115,6 +115,7 @@ export const setIdToSlug = {
   swsh3: "darkness-ablaze",
   swsh2: "rebel-clash",
   swsh1: "sword-shield",
+  sv8pt5: "prismatic-evolutions",
   sv8: "surging-sparks",
   sv7: "stellar-crown",
   sv6pt5: "shrouded-fable",
@@ -189,3 +190,7 @@ const allSlugs = {
 export const getSlugFromSetId = (id: string) => allIds[id] ?? "";
 
 export const getSetIdFromSlug = (slug: string) => allSlugs[slug] ?? "";
+
+export const seriesNameToSlug = (seriesName: string): string => {
+  return seriesName.replaceAll(" ", "").replaceAll("&", "-").toLowerCase();
+};

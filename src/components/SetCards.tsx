@@ -21,11 +21,11 @@ import ComboSelect from "./ComboSelect";
 import SortSelect from "./SortSelect";
 import FlyoutMenu from "./FlyoutMenu";
 import { BinderView } from "./BinderView";
-import { motion } from "framer-motion";
-import { combineRarities, formatPrice, getPrice } from "@/utilities/data";
+import { motion } from "motion/react";
 import Image from "next/image";
 import { Card, Rarities, Set, Subset } from "@/utilities/types";
 import InfiniteScroll from "react-infinite-scroller";
+import { combineRarities, formatPrice, getPrice } from "@/utilities/formatting";
 
 const cardReducer = (state: any, action: any) => {
   // console.log({ state, action });

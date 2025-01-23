@@ -2,7 +2,7 @@
 
 import { getSlugFromSetId } from "@/utilities/slugs";
 import { GlobeAltIcon } from "@heroicons/react/24/outline";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
