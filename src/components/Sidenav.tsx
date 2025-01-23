@@ -24,7 +24,7 @@ import {
   useSpring,
   useAnimate,
   stagger,
-} from "framer-motion";
+} from "motion/react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import SeriesItem from "./SeriesItem";

@@ -21,7 +21,7 @@ import ComboSelect from "./ComboSelect";
 import SortSelect from "./SortSelect";
 import FlyoutMenu from "./FlyoutMenu";
 import { BinderView } from "./BinderView";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { combineRarities, formatPrice, getPrice } from "@/utilities/data";
 import Image from "next/image";
 import { Card, Rarities, Set, Subset } from "@/utilities/types";

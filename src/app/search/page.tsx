@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/solid";
 import useSearchCards from "@/hooks/useSearchCards";
 import LoadingAnimation from "@/components/LoadingAnimation";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { getSlugFromSetId } from "@/utilities/slugs";
 
 // TODO: Server Component & Server Actions

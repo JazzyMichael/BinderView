@@ -4,7 +4,7 @@ import useBinders from "@/hooks/useBinders";
 import useSearchCards from "@/hooks/useSearchCards";
 import { PlusCircleIcon, PlusIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
@@ -43,7 +43,7 @@ export default function Binders() {
             className="flex space-x-2"
           >
             <input
-              disabled={Object.keys(binders).length > 4}
+              disabled={Object.keys(binders).length > 7}
               type="text"
               value={newBinderName}
               onChange={(e) => setNewBinderName(e.target.value)}
@@ -55,7 +55,7 @@ export default function Binders() {
               type="submit"
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring", stiffness: 400, damping: 6 }}
-              className="bg-slate-900 text-white flex gap-3 p-3 rounded-lg"
+              className="bg-slate-900 text-white flex gap-3 p-3 rounded-lg cursor-pointer"
             >
               <PlusCircleIcon className="h-6 w-6" />
               Add
