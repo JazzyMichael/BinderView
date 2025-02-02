@@ -33,6 +33,7 @@ export const BinderView = ({
   if (includeSubset && subset?.cards) {
     subset.cards.forEach((card: any) => c.push(card));
     cardTotal += subset.cards.length;
+    console.log(collection, collectionSelection);
   }
 
   const { cols, rows, page } = BinderTypes[initialType];
@@ -62,12 +63,12 @@ export const BinderView = ({
         ></BinderLayoutSelect>
       </div>
 
-      {collectionSelection.name === "Not in Collection" ||
-        (!c?.length && <div>Not available in binder view.</div>)}
-
-      {collectionSelection?.name !== "Not in Collection" &&
-        renderedPages.map((_, i) => (
-          <div key={i} className="inline-block">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-fit mx-auto">
+        {renderedPages.map((_, i) => (
+          <div
+            key={i}
+            className={i ? "inline-block" : "col-span-1 md:col-span-2"}
+          >
             <div className="text-sm">Page {i + 1}</div>
             <div
               className="w-[400px] inline-grid mt-1 mb-3 mx-2 p-3 bg-gray-900 rounded"
@@ -88,50 +89,17 @@ export const BinderView = ({
                   }`}
                 >
                   {!!c[`${size.page * i + i2}`] ? (
-                    <>
-                      {!collectionSelection ||
-                        (collectionSelection?.name !== "In Collection" && (
-                          <Image
-                            height={256}
-                            width={200}
-                            src={c[`${size.page * i + i2}`].images.small}
-                            alt={`${c[`${size.page * i + i2}`].name} Card`}
-                            className={
-                              c[`${size.page * i + i2}`].isReverse
-                                ? "rounded brightness-150"
-                                : "rounded"
-                            }
-                          />
-                        ))}
-
-                      {collectionSelection.name === "In Collection" && (
-                        <Image
-                          height={256}
-                          width={200}
-                          src={c[`${size.page * i + i2}`].images.small}
-                          alt={`${c[`${size.page * i + i2}`].name} Card`}
-                          className={
-                            c[`${size.page * i + i2}`].isReverse
-                              ? collection[
-                                  c[`${size.page * i + i2}`].id + "-reverse"
-                                ]
-                                ? `${
-                                    c[`${size.page * i + i2}`].isReverse
-                                      ? "brightness-125 hue-rotate-30"
-                                      : ""
-                                  }`
-                                : "brightness-50"
-                              : collection[c[`${size.page * i + i2}`].id]
-                              ? `${
-                                  c[`${size.page * i + i2}`].isReverse
-                                    ? "brightness-125 hue-rotate-30"
-                                    : ""
-                                }`
-                              : "brightness-50"
-                          }
-                        />
-                      )}
-                    </>
+                    <Image
+                      height={256}
+                      width={200}
+                      src={c[`${size.page * i + i2}`].images.small}
+                      alt={`${c[`${size.page * i + i2}`].name} Card`}
+                      className={
+                        c[`${size.page * i + i2}`].isReverse
+                          ? "rounded brightness-150"
+                          : "rounded"
+                      }
+                    />
                   ) : (
                     <div></div>
                   )}
@@ -140,6 +108,7 @@ export const BinderView = ({
             </div>
           </div>
         ))}
+      </div>
     </div>
   );
 };

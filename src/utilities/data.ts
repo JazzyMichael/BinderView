@@ -3,7 +3,7 @@ import { getRarities } from "./formatting";
 import { getSetIdFromSlug } from "./slugs";
 import { Card, Rarities, Subset } from "./types";
 
-export const searchCards = async (term: string) => {
+export async function searchCards(term: string): Promise<Card[]> {
   const url =
     term.split(" ").length === 1
       ? `${BASE_URL}/v2/cards?q=name:*${term}*`
@@ -11,10 +11,11 @@ export const searchCards = async (term: string) => {
 
   const res = await fetch(url, {
     headers: { "X-Api-Key": API_KEY },
+    next: { revalidate: 172800 },
   }).then((x) => x.json());
 
   return res?.data ?? [];
-};
+}
 
 export async function getSets() {
   const englishSetsUrl = `${BASE_URL}/v2/sets?orderBy=releaseDate`;
