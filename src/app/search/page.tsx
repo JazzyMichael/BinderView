@@ -1,37 +1,32 @@
-"use client";
-
-import { SyntheticEvent } from "react";
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  MagnifyingGlassIcon,
-  QueueListIcon,
-  ArrowRightIcon,
-} from "@heroicons/react/24/solid";
-import useSearchCards from "@/hooks/useSearchCards";
+import { MagnifyingGlassIcon, QueueListIcon } from "@heroicons/react/24/solid";
 import LoadingAnimation from "@/components/LoadingAnimation";
-import { motion } from "motion/react";
 import { getSlugFromSetId } from "@/utilities/slugs";
+import { searchCards } from "@/utilities/data";
+import { getPrice } from "@/utilities/formatting";
+import { Metadata } from "next";
 
-// TODO: Server Component & Server Actions
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-// import { Metadata } from "next";
+export async function generateMetadata(props: {
+  searchParams: SearchParams;
+}): Promise<Metadata> {
+  const { q: query } = await props.searchParams;
 
-// export async function generateMetadata(): Promise<Metadata> {
-//   return {
-//     title: "Search All Pokemon Cards on Binder View",
-//     description:
-//       "What are you lookin for? Type it in here to find the cards you want, and play around with the sets menu to look at all the cards you can imagine.",
-//   };
-// }
-
-export default function SearchPage() {
-  const { term, search, results, loading } = useSearchCards();
-
-  const handleSearchSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    search(e?.target[0]?.value ?? "", 10);
+  return {
+    title: query
+      ? `'${query}' search results - BinderView`
+      : "Search All Pokemon Cards - BinderView",
+    description: `What are you lookin for? You can search for any card except ${query}... Just Kidding! BinderView has everything!`,
   };
+}
+
+export default async function SearchPage(props: {
+  searchParams: SearchParams;
+}) {
+  const { q: query } = await props.searchParams;
 
   return (
     <main className="w-full h-screen overflow-y-auto text-center">
@@ -41,61 +36,82 @@ export default function SearchPage() {
       </Link>
 
       <form
-        onSubmit={handleSearchSubmit}
+        action="/search"
+        method="GET"
         className="max-w-md px-4 mx-auto mt-12"
       >
-        <div className="relative mb-2">
-          <MagnifyingGlassIcon className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" />
+        <div className="relative text-gray-500">
+          <MagnifyingGlassIcon className="absolute top-0 bottom-0 w-6 h-6 my-auto left-3" />
           <input
+            placeholder="Search"
             type="text"
-            className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
+            name="q"
+            defaultValue={query}
+            className="pl-16 pr-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
-
-        <motion.button
-          whileTap={{ scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 500, damping: 10 }}
-          type="submit"
-          className="inline-flex w-full justify-center items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Search
-          <ArrowRightIcon className="h-6 w-6" />
-        </motion.button>
       </form>
 
-      {results?.length && !loading ? (
-        <div className="mt-4 mb-10 text-gray-700 italic">
-          {results.length} results for &quot;{term}&quot;
-        </div>
-      ) : undefined}
-
-      {loading && <LoadingAnimation />}
-
-      <div className="block m-2">
-        {results.map((card: any) => (
-          <div
-            key={card.id}
-            className="inline-block text-center m-2 shadow-lg rounded-lg shadow-indigo-800 pt-2"
-          >
-            <p>{card.name}</p>
-            <Link
-              prefetch={false}
-              href={`/${getSlugFromSetId(card.set.id)}`}
-              className="underline text-sm"
-            >
-              {card.set.name}
-            </Link>
-            <p>{card.set.series}</p>
-            <Image
-              loading={"lazy"}
-              src={card.images.small}
-              alt={card.name}
-              width={220}
-              height={300}
-            />
-          </div>
-        ))}
-      </div>
+      <Suspense fallback={<LoadingAnimation />}>
+        <SearchResults query={query} />
+      </Suspense>
     </main>
+  );
+}
+
+async function SearchResults({ query }) {
+  if (!query) return <p></p>;
+
+  const results = await searchCards(query);
+
+  if (!results.length)
+    return <p className="mt-10 text-gray-700">Nothing Found!</p>;
+
+  return (
+    <div className="block my-10 mx-2">
+      <p className="mb-4 italic">
+        {results.length} '{query}' cards
+      </p>
+
+      {results.map((card) => (
+        <div
+          key={card.id}
+          className="inline-block text-center m-2 shadow-lg rounded-lg shadow-indigo-800 pt-2"
+        >
+          <p>{card.name}</p>
+
+          <Link
+            prefetch={false}
+            href={`/${getSlugFromSetId(card.set.id)}`}
+            className="underline text-sm"
+          >
+            {card.set.name}
+          </Link>
+
+          <p className="text-sm mb-1">
+            <span className="mr-1">{card.rarity}</span>
+
+            {card.tcgplayer?.url && (
+              <a
+                href={card.tcgplayer.url}
+                target="_blank"
+                className="underline"
+              >
+                ${getPrice(card)}
+              </a>
+            )}
+          </p>
+
+          <Image
+            loading={"lazy"}
+            src={card.images.small}
+            alt={card.name}
+            width={220}
+            height={300}
+            className="rounded-lg"
+          />
+        </div>
+      ))}
+    </div>
   );
 }
