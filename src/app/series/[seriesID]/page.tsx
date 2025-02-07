@@ -88,7 +88,11 @@ export default async function SeriesPage({ params }: Props) {
   const sets = await Promise.all(combinedSets.map(({ id }) => getSetCards(id)));
 
   const combinedCards = sets.reduce(
-    (prev, cur) => [...prev, ...cur.cards, ...(cur.subset?.cards ?? [])],
+    (prev, cur) => [
+      ...prev,
+      ...(cur?.cards ?? cur?.data ?? []),
+      ...(cur?.subset?.cards ?? cur?.subset?.data ?? []),
+    ],
     []
   );
 
