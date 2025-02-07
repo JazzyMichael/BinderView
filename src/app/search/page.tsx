@@ -70,7 +70,7 @@ async function SearchResults({ query }) {
   return (
     <div className="block my-10 mx-2">
       <p className="mb-4 italic">
-        {results.length} '{query}' cards
+        {results.length} &apos;{query}&apos; cards
       </p>
 
       {results.map((card) => (
