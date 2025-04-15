@@ -16,7 +16,7 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        run: npm run force-install
+        run: npm install
 
       - name: Run Lint
         run: npm run lint

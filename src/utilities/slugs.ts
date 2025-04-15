@@ -115,6 +115,7 @@ export const setIdToSlug = {
   swsh3: "darkness-ablaze",
   swsh2: "rebel-clash",
   swsh1: "sword-shield",
+  sv9: "journey-together",
   sv8pt5: "prismatic-evolutions",
   sv8: "surging-sparks",
   sv7: "stellar-crown",

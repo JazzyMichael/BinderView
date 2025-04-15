@@ -8,6 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://binderview.com";
 
   const highPriority = {
+    "journey-together": true,
     "prismatic-evolutions": true,
     "surging-sparks": true,
     "stellar-crown": true,
