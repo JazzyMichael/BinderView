@@ -2,7 +2,9 @@
 
 import { useEffect, useReducer, useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "motion/react";
 import Link from "next/link";
+import Image from "next/image";
 import clsx from "clsx";
 import {
   XMarkIcon,
@@ -15,16 +17,14 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import useScrollDirection from "@/hooks/useScrollDirection";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import useBinders from "@/hooks/useBinders";
+import InfiniteScroll from "@/hooks/InfiniteScroll";
 import BreadCrumbs from "./BreadCrumbs";
 import SizeSlider from "./SizeSlider";
 import ComboSelect from "./ComboSelect";
 import SortSelect from "./SortSelect";
 import FlyoutMenu from "./FlyoutMenu";
 import { BinderView } from "./BinderView";
-import { motion } from "motion/react";
-import Image from "next/image";
 import { Card, Rarities, Set, Subset } from "@/utilities/types";
-import InfiniteScroll from "react-infinite-scroller";
 import { combineRarities, formatPrice, getPrice } from "@/utilities/formatting";
 
 const cardReducer = (state: any, action: any) => {
@@ -566,12 +566,7 @@ export default function SetCards({
       )}
 
       {cardState?.selectedCards && (
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={loadMore}
-          hasMore={hasMore}
-          useWindow={false}
-        >
+        <InfiniteScroll loadMore={loadMore} hasMore={hasMore}>
           {/* binder view */}
           {view === "binder" && (
             <BinderView
