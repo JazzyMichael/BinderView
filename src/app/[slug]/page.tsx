@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const setName = (cards?.length && cards[0]?.set?.name) || "Full Set";
 
   return {
-    title: `${setName} Card List - BinderView Pokemon Cards`,
+    title: `${setName} Card List (Full Set) - BinderView Pokemon Cards`,
     description: `BinderView is the best way to experience everything ${setName} has to offer.`,
     applicationName: "BinderView",
     openGraph: {
       type: "website",
-      title: `${setName} Card List - BinderView Pokemon Cards`,
+      title: `${setName} Card List (Full Set) - BinderView Pokemon Cards`,
       description:
-        "Vintage to Modern, and Everything in-between. The best place to see full Pokemon card lists.",
+        "Vintage to Modern, and Everything in-between. The best place to view full Pokemon card lists.",
       siteName: "BinderView",
     },
   };
