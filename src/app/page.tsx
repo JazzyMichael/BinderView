@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Binder View Pokemon Cards List",
     description:
-      "From Vintage to Modern, and everything in-between, BinderView provides the best digital binder experience for viewing pokemon cards.",
+      "Vintage to Modern, and everything in-between! BinderView provides the best digital binder experience for viewing pokemon cards and tracking prices.",
     applicationName: "BinderView",
     openGraph: {
       images: ["/screenshots/landing-page-opengraph.jpg"],

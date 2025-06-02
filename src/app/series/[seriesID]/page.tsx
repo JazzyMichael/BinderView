@@ -43,21 +43,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (seriesID === "scarlet-violet") {
     images.push("/screenshots/scarlet-violet.jpg");
-  }
-
-  if (seriesID === "sword-shield") {
+  } else if (seriesID === "sword-shield") {
     images.push("/screenshots/sword-shield.jpg");
+  } else {
+    images.push(`/screenshots/binder-view.jpg`);
   }
 
   return {
-    title: `${pretty} Full Era Pokemon Cards`,
+    title: `${pretty} (Full Era) Cards`,
     description:
-      "THE ENTIRE SERIES/ERA/GENERATION AT ONCE on the BinderView Platform",
+      "THE ENTIRE ERA in one place! Binderview is the best place to view cards and track prices in 2025.",
     openGraph: {
       images,
-      title: `${pretty} Full Era Pokemon Cards`,
+      title: `All ${pretty} Cards (Full Era)`,
       description:
-        "THE ENTIRE SERIES/ERA/GENERATION AT ONCE on the BinderView Platform",
+        "THE ENTIRE ERA in one place! Binderview is the best place to view cards and track prices in 2025.",
     },
   };
 }
