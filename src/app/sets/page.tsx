@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { Set } from "@/utilities/types";
 import { formatSets } from "@/utilities/formatting";
+import CloseIconButton from "@/components/CloseIconButton";
 
 // export const revalidate = 86400; // every day
 
@@ -26,9 +27,11 @@ export default async function Sets() {
 
   return (
     <>
-      <h1 className="text-xl text-center font-geist-sans py-4 mb-2 bg-slate-100">
-        Sets
-      </h1>
+      <div className="grid grid-cols-3 justify-center gap-2 text-xl text-center font-geist-sans py-4 mb-2 bg-slate-100">
+        <div></div>
+        <h1>Sets</h1>
+        <CloseIconButton />
+      </div>
 
       <TabGroup>
         <TabList className="flex gap-2 overflow-x-auto whitespace-nowrap snap-mandatory snap-x pt-2 pb-4 px-3">
