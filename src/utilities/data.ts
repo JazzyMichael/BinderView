@@ -55,14 +55,14 @@ export async function getCardsBySlug(slug: string): Promise<{
     return { cards: null, subset: null, rarities: null };
   }
 
-  const res = await getSetCards(id);
+  const page1 = await getSetCards(id);
 
-  const cards: Card[] = res?.data ?? [];
+  let cards: Card[] = page1?.data ?? [];
 
   // load second page
-  if (res.totalCount > res.count) {
-    const res2 = await getSetCards(id, 2);
-    cards.concat(res2.data);
+  if (page1.totalCount > page1.count) {
+    const page2 = await getSetCards(id, 2);
+    cards = [...cards, ...page2.data];
   }
 
   let subset: Subset;
