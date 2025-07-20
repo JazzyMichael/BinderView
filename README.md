@@ -16,4 +16,8 @@ The series page loads all of the sets in a "Pokemon series" using the same reque
 
 ### Stack
 
-NextJS & Vercel, React, Tailwind
+NextJS, React, Tailwind, Vercel, Supabase
+
+```
+npm run dev
+```
