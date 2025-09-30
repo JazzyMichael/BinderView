@@ -19,6 +19,7 @@ export default function BreadCrumbs({
   onViewChange?: Function;
 }) {
   const tabs = [
+    // { id: "sealed", name: "Sealed", href: "#" },
     { id: "fullscreen", name: "Screen", href: "#" },
     { id: "binder", name: "Binder", href: "#" },
   ];

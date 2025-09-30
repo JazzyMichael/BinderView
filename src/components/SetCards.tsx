@@ -28,8 +28,6 @@ import { Card, Rarities, Set, Subset } from "@/utilities/types";
 import { combineRarities, formatPrice, getPrice } from "@/utilities/formatting";
 
 const cardReducer = (state: any, action: any) => {
-  // console.log({ state, action });
-
   if (action.type === "initialize") {
     state = { ...state, ...action.value };
 
@@ -221,7 +219,9 @@ export default function SetCards({
   const { binders, newBinderName, setNewBinderName, createBinder, addCard } =
     useBinders();
   const [cardState, cardDispatch] = useReducer(cardReducer, undefined);
-  const [view, setView] = useState(initialView);
+  const [view, setView] = useState<"sealed" | "fullscreen" | "binder">(
+    initialView
+  );
   const [selectedCard, setSelectedCard] = useState(null);
 
   // infinite scroll
@@ -329,7 +329,7 @@ export default function SetCards({
             cardCount={cardState.totalCount}
             totalPrice={cardState.totalPrice}
             activeViewId={view}
-            onViewChange={(x: string) => {
+            onViewChange={(x: "sealed" | "fullscreen" | "binder") => {
               setView(x);
               setInitialView(x);
               setLoadedCards(
